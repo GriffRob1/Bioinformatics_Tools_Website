@@ -1,0 +1,138 @@
+/* globals */
+
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  filter: blur(500px);
+}
+
+.current {
+  border-bottom: 4px solid white;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+.app {
+  margin: 0 auto;
+}
+
+.container {
+  display: flex;
+}
+
+/* main styles */
+
+.nav-bar {
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+}
+
+.nav-bar h1 {
+  justify-content: flex-start;
+  color: white;
+  margin: 5px;
+}
+
+.nav-bar ul{
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-bar ul li {
+  padding: 20px;
+}
+
+.nav-bar ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.sign-in-button{
+  background-color: blue;
+  padding: 3px;
+  font-size: 1em;
+  line-height: 1.4;
+  font-family: sans-serif;
+  color: white;
+}
+
+.title-container {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  position: relative;
+  z-index: 0;
+}
+
+.title-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.title-area {
+  color: white;
+  z-index: 2;
+  margin: 10vh;
+}
+
+.title-area h1 {
+  font-size: 20vh;
+}
+
+.title-area p {
+  font-size: 5vh;
+  margin-bottom: 5vh;
+}
+
+.title-area button {
+  background-color: blue;
+  color: white;
+  font-family: inherit;
+  font-size: 3vh;
+  border-width: 3px;
+  width: fit-content;
+  height: fit-content;
+  padding: 10px;
+}
+
+.title-area button a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
