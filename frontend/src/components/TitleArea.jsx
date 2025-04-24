@@ -14,11 +14,11 @@ export default function TitleArea() {
     }
 
     return (
-        <section className='container title-container' style={sectionStyle}>
-            <div className='title-area'>
-                <h1 className='title'>Bioinformatics Tools</h1>
+        <section className={'container title-container'} style={sectionStyle}>
+            <div className={'title-area'}>
+                <h1 className={'title'}>Bioinformatics Tools</h1>
                 <p>Essential tools for analysing biological data</p>
-                <button onClick={navigateToAbout}>What is Bioinformatics?</button>
+                <button className={'blue-button what-is-bioinformatics-button'} onClick={navigateToAbout}>What is Bioinformatics?</button>
             </div>
         </section>
     )

@@ -1,4 +1,6 @@
-/* globals */
+/*globals*/
+
+
 
 html {
   box-sizing: border-box;
@@ -34,12 +36,81 @@ p {
   display: flex;
 }
 
-/* main styles */
+.blue-button {
+  background-color: blue;
+  color: white;
+  font-family: inherit;
+  border-width: 3px;
+  line-height: 1.4;
+  width: fit-content;
+  height: fit-content;
+}
+
+.blue-button:active {
+  background-color: darkblue;
+}
+
+
+
+/*UI elements*/
+.triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 100px solid black;
+}
+
+.triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 100px solid black;
+}
+
+.triangle-left {
+  width: 0;
+  height: 0;
+  border-top: 2vw solid transparent;
+  border-bottom: 2vw solid transparent;
+  border-right: 4vw solid black;
+}
+
+.triangle-right {
+  width: 0;
+  height: 0;
+  border-top: 2vw solid transparent;
+  border-bottom: 2vw solid transparent;
+  border-left: 4vw solid black;
+}
+
+.dot {
+  height: 15px;
+  width: 15px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+
+
+/*main styles*/
+
+
+
+/* nav bar: */
+
+
 
 .nav-bar {
+  width: 100%;
   justify-content: space-between;
   align-items: center;
   background-color: black;
+  position: sticky;
+  top: 0;
+  z-index: 4;
 }
 
 .nav-bar h1 {
@@ -64,13 +135,15 @@ p {
 }
 
 .sign-in-button{
-  background-color: blue;
   padding: 3px;
   font-size: 1em;
-  line-height: 1.4;
-  font-family: sans-serif;
-  color: white;
 }
+
+
+
+/*title area:*/
+
+
 
 .title-container {
   background-size: cover;
@@ -97,8 +170,8 @@ p {
   margin: 10vh;
 }
 
-.title-area h1 {
-  font-size: 20vh;
+.title {
+  font-size: calc(min(20vh, 10vw));
 }
 
 .title-area p {
@@ -106,29 +179,123 @@ p {
   margin-bottom: 5vh;
 }
 
-.title-area button {
-  background-color: blue;
-  color: white;
-  font-family: inherit;
+.what-is-bioinformatics-button {
   font-size: 3vh;
-  border-width: 3px;
-  width: fit-content;
-  height: fit-content;
   padding: 10px;
 }
 
-.title-area button a {
+.what-is-bioinformatics-button a {
   color: inherit;
   text-decoration: inherit;
 }
 
 
 
+/*home page content*/
 
 
 
+.home-content {
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  height: 100vh;
+}
+
+.most-popular-tools-container {
+  width: 100%;
+  justify-content: space-around;
+}
+
+.most-popular-tools {
+  width: 80%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.most-popular-tools-title {
+  margin: 20px;
+  font-size: 3em;
+}
+
+.see-all-tools-button {
+  font-size: 2em;
+  padding: 3px;
+  margin: 20px;
+}
+
+/*Tool Description:*/
+
+.tool-description {
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 15em;
+  height: 20em;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 20px;
+  background-color: lightgray;
+}
+
+.tool-reference-image {
+  filter: none;
+  margin-top: 20px;
+  width: 80%;
+  aspect-ratio: 1/1;
+}
+
+.tool-title {
+
+}
+
+.tool-text-description {
+  padding: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.dot-container {
+  width: 10vw;
+  justify-content: space-between;
+}
 
 
+
+/*footer:*/
+
+
+
+.footer {
+  height: 30px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+}
+
+.footer div {
+  margin: 5px;
+}
+
+.social-media {
+  justify-content: space-around;
+  align-items: center;
+}
+
+.social-media p {
+  margin: 3px;
+}
+
+.social-media img {
+  filter: none;
+  height: 25px;
+  aspect-ratio: 1/1;
+  margin: 3px;
+}
 
 
 
