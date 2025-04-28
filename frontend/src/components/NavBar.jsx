@@ -16,7 +16,9 @@ export default function NavBar() {
                 <li><NavLink to='/'>Home</NavLink></li>
                 <li><NavLink to='/tools'>Tools</NavLink></li>
                 <li><NavLink to='/about'>About</NavLink></li>
-                <li><button className={'sign-in-button blue-button'} onClick={navigateToSignIn}>Sign In</button></li>
+                <li>
+                    <button className={'sign-in-button blue-button'} onClick={navigateToSignIn}>Sign In</button>
+                </li>
             </ul>
         </nav>
     )

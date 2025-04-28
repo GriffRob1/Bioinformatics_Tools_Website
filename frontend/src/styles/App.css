@@ -44,6 +44,7 @@ p {
   line-height: 1.4;
   width: fit-content;
   height: fit-content;
+  padding: 3px;
 }
 
 .blue-button:active {
@@ -206,11 +207,6 @@ p {
 .most-popular-tools-container {
   width: 100%;
   justify-content: space-around;
-}
-
-.most-popular-tools {
-  width: 80%;
-  justify-content: space-around;
   align-items: center;
 }
 
@@ -225,14 +221,21 @@ p {
   margin: 20px;
 }
 
+.tools-list {
+  width: 60%;
+  list-style-type: none;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /*Tool Description:*/
 
 .tool-description {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  width: 15em;
-  height: 20em;
+  width: 15vw;
+  height: 45vh;
   border-style: solid;
   border-width: 2px;
   border-color: black;
@@ -248,7 +251,7 @@ p {
 }
 
 .tool-title {
-
+  font-size: calc(min(3vh, 1.5vw));
 }
 
 .tool-text-description {
@@ -299,7 +302,67 @@ p {
 
 
 
+/*tool search page*/
 
+.tools-page {
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
 
+.search-tools-title {
+  margin: 20px;
+  font-size: 5vh;
+}
 
+.tools-search-bar {
+  width: 80%;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: black;
+  background-color: lightgray;
+  font-size: 3vh;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 40vh;
+}
 
+.filter-section {
+  justify-content: space-around;
+}
+
+.sort-section {
+  flex-direction: column;
+}
+
+.sorting-radio-buttons {
+  flex-direction: column;
+  margin-left: 5%;
+}
+
+.tools-search-bar fieldset label input, #category {
+  margin-left: 10px;
+}
+
+.tools-search-bar fieldset label {
+  display: flex;
+  align-items: center;
+}
+
+.tools-search-bar fieldset label input,
+.tools-search-bar fieldset label select {
+  font-size: inherit;
+}
+
+.tools-search-bar fieldset label input[type=checkbox],
+.tools-search-bar fieldset label input[type=radio] {
+  transform: scale(1.5);
+}
+
+.search-button {
+  height: 15%;
+  width: 10%;
+  font-size: 80%;
+}
