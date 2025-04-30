@@ -1,6 +1,11 @@
 import React from 'react';
 
-export default function ToolsSearchBar() {
+export default function ToolsSearchBar({inputName,
+                                        inputCategory,
+                                        inputSortBy,
+                                        onInputNameChange,
+                                        onInputCategoryChange,
+                                        onInputSortByChange}) {
     return (
         <form className={'container tools-search-bar'} action={'/tools'} method={'GET'}>
             <fieldset className={'container filter-section'}>
@@ -8,15 +13,23 @@ export default function ToolsSearchBar() {
 
                 <label className={'tool-name-input'}>
                     Name of Tool:
-                    <input type={'text'} name={'name'} id={'name'} />
+                    <input type={'text'}
+                           name={'name'}
+                           id={'name'}
+                           value={inputName}
+                           onChange={(e) => onInputNameChange(e.target.value)}/>
                 </label>
                 <label className={'category-input'}>
                     Tool Category:
-                    <select name={'category'} id={'category'}>
-                        <option disabled selected>Enter Category</option>
-                        <option>Motif Finding</option>
-                        <option>Genome Sequencing</option>
-                        <option>Pairwise Alignment</option>
+                    <select
+                        name={'category'}
+                        id={'category'}
+                        onChange={(e) => onInputCategoryChange(e.target.value)}
+                    >
+                        <option value={''} selected>No Category Selected</option>
+                        <option value={'Genome Sequencing Tools'}>Genome Sequencing Tools</option>
+                        <option value={'Motif Finding Tools'}>Motif Finding Tools</option>
+                        <option value={'Sequence Alignment Tools'}>Sequence Alignment Tools</option>
                     </select>
                 </label>
 
@@ -29,23 +42,33 @@ export default function ToolsSearchBar() {
                 <legend>Sort By:</legend>
 
                 <div className={'container sorting-radio-buttons'}>
+
                     <label className={'sort-by-most-popular-input'}>
                         Most Popular
-                        <input type={'radio'} name={'sort-by'} value={'sort-by-most-popular'}/>
+                        <input type={'radio'}
+                               name={'sort-by'}
+                               value={'sort-by-most-popular'}
+                               checked={inputSortBy === 'sort-by-most-popular'}
+                               onChange={(e) => onInputSortByChange(e.target.value)}/>
                     </label>
 
                     <label className={'sort-by-alphabetical-input'}>
                         Alphabetical
-                        <input type={'radio'} name={'sort-by'} value={'sort-by-alphabetical'}/>
+                        <input type={'radio'}
+                               name={'sort-by'}
+                               value={'sort-by-alphabetical'}
+                               onChange={(e) => onInputSortByChange(e.target.value)}/>
                     </label>
 
                     <label className={'sort-by-newest-input'}>
                         Newest
-                        <input type={'radio'} name={'sort-by'} value={'sort-by-newest'}/>
+                        <input type={'radio'}
+                               name={'sort-by'}
+                               value={'sort-by-newest'}
+                               onChange={(e) => onInputSortByChange(e.target.value)}/>
                     </label>
                 </div>
             </fieldset>
-            <button type={'submit'} className={'blue-button search-button'}>Search Tools</button>
         </form>
     )
 }

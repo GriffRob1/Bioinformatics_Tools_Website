@@ -36,6 +36,10 @@ p {
   display: flex;
 }
 
+.grid-container {
+  display: grid;
+}
+
 .blue-button {
   background-color: blue;
   color: white;
@@ -54,6 +58,9 @@ p {
 
 
 /*UI elements*/
+
+
+
 .triangle-up {
   width: 0;
   height: 0;
@@ -112,6 +119,11 @@ p {
   position: sticky;
   top: 0;
   z-index: 4;
+  color: white;
+}
+
+.nav-bar a {
+  text-decoration: none;
 }
 
 .nav-bar h1 {
@@ -132,7 +144,6 @@ p {
 
 .nav-bar ul li a {
   color: white;
-  text-decoration: none;
 }
 
 .sign-in-button{
@@ -304,6 +315,8 @@ p {
 
 /*tool search page*/
 
+
+
 .tools-page {
   flex-direction: column;
   justify-content: space-around;
@@ -315,8 +328,15 @@ p {
   font-size: 5vh;
 }
 
+
+
+/*tools search bar*/
+
+
+
 .tools-search-bar {
   width: 80%;
+  height: 30vh;
   margin: 10px;
   padding: 5px;
   border-radius: 5px;
@@ -326,7 +346,6 @@ p {
   font-size: 3vh;
   flex-direction: column;
   justify-content: space-between;
-  height: 40vh;
 }
 
 .filter-section {
@@ -365,4 +384,27 @@ p {
   height: 15%;
   width: 10%;
   font-size: 80%;
+}
+
+
+
+/*tools search container*/
+
+.tools-search-container {
+  width: 80%;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.tools-search-container-list {
+  flex-direction: column;
+  list-style: none;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  gap: 20px;
+}
+
+.tool-description-container {
+  justify-content: center;
+  align-items: center;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
 
-export default function ToolDescription({URL, imagePath, toolTitle, textDescription}) {
+export default function ToolDescription({URL, imagePath, toolTitle, textDescription, popularity, dateAdded, category}) {
 
     const navigate = useNavigate();
     const navigateToToolPage = () => {

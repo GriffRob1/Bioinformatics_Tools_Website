@@ -1,7 +1,6 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
 import ToolDescription from './ToolDescription';
-
+import BlueButton from "./BlueButton";
 
 
 export default function HomeContent() {
@@ -37,12 +36,6 @@ export default function HomeContent() {
 
     toolsSampleData = JSON.parse(toolsSampleData)
 
-
-    const navigate = useNavigate();
-    const navigateToTools = () => {
-        navigate('/tools');
-    }
-
     return (
       <section className={'container home-content'}>
           <h2 className={'most-popular-tools-title'}>Most Popular Tools</h2>
@@ -51,7 +44,13 @@ export default function HomeContent() {
               <ul className={'container tools-list'}>
                   {toolsSampleData.map((item) => (
                       <li key={item.id}>
-                          <ToolDescription URL={item.URL} imagePath={item.imagePath} toolTitle={item.toolTitle} textDescription={item.textDescription}/>
+                          <ToolDescription
+                              URL={item.URL}
+                              imagePath={item.imagePath}
+                              toolTitle={item.toolTitle}
+                              textDescription={item.textDescription}
+                              popularity={item.popularity}
+                              dateAdded={item.dateAdded}/>
                       </li>
                   ))}
               </ul>
@@ -62,7 +61,9 @@ export default function HomeContent() {
               <div className={'dot'}></div>
               <div className={'dot'}></div>
           </div>
-          <button className={'blue-button see-all-tools-button'} onClick={navigateToTools}>See All Tools</button>
+          <BlueButton content={'See All Tools'}
+                      URL={'/tools'}
+                      buttonClass={'see-all-tools-button'} />
       </section>
     );
 }
