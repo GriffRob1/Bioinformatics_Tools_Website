@@ -2,9 +2,11 @@ import React from 'react';
 
 export default function ToolsSearchBar({inputName,
                                         inputCategory,
+                                        inputShowOnlyFavorites,
                                         inputSortBy,
                                         onInputNameChange,
                                         onInputCategoryChange,
+                                        onInputShowOnlyFavoritesChange,
                                         onInputSortByChange}) {
     return (
         <form className={'container tools-search-bar'} action={'/tools'} method={'GET'}>
@@ -35,7 +37,10 @@ export default function ToolsSearchBar({inputName,
 
                 <label className={'show-favorites-input'}>
                     Show only favorites:
-                    <input type={'checkbox'} name={'show-favorites'} id={'show-favorites'}/>
+                    <input type={'checkbox'}
+                           name={'show-favorites'}
+                           id={'show-favorites'}
+                           onChange={(e) => onInputShowOnlyFavoritesChange(e.target.checked)}/>
                 </label>
             </fieldset>
             <fieldset className={'container sort-section'}>

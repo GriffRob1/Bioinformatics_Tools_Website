@@ -42,15 +42,17 @@ export default function HomeContent() {
           <div className={'container most-popular-tools-container'}>
               <div className={'triangle-left'}></div>
               <ul className={'container tools-list'}>
-                  {toolsSampleData.map((item) => (
-                      <li key={item.id}>
+                  {toolsSampleData.map((tool) => (
+                      <li key={tool.id}>
                           <ToolDescription
-                              URL={item.URL}
-                              imagePath={item.imagePath}
-                              toolTitle={item.toolTitle}
-                              textDescription={item.textDescription}
-                              popularity={item.popularity}
-                              dateAdded={item.dateAdded}/>
+                              id={tool.id}
+                              URL={tool.URL}
+                              imagePath={tool.imagePath}
+                              toolTitle={tool.toolTitle}
+                              textDescription={tool.textDescription}
+                              popularity={tool.popularity}
+                              dateAdded={tool.dateAdded}
+                              isFavoritable={false}/>
                       </li>
                   ))}
               </ul>

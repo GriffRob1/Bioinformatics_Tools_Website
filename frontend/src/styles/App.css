@@ -101,6 +101,10 @@ p {
   display: inline-block;
 }
 
+.heart-icon {
+  filter: none;
+}
+
 
 
 /*main styles*/
@@ -239,14 +243,18 @@ p {
   align-items: center;
 }
 
+
+
 /*Tool Description:*/
+
+
 
 .tool-description {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
   width: 15vw;
-  height: 45vh;
+  height: 50vh;
   border-style: solid;
   border-width: 2px;
   border-color: black;
@@ -256,8 +264,8 @@ p {
 
 .tool-reference-image {
   filter: none;
-  margin-top: 20px;
   width: 80%;
+  margin: 5px;
   aspect-ratio: 1/1;
 }
 
@@ -389,6 +397,8 @@ p {
 
 
 /*tools search container*/
+
+
 
 .tools-search-container {
   width: 80%;

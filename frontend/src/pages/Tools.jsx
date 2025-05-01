@@ -108,6 +108,7 @@ export default function Tools() {
 
     const [inputName, setInputName] = useState('');
     const [inputCategory, setInputCategory] = useState('');
+    const [inputShowOnlyFavorites, setInputShowOnlyFavorites] = useState(false);
     const [inputSortBy, setInputSortBy] = useState('sort-by-most-popular');
 
     return (
@@ -116,14 +117,17 @@ export default function Tools() {
             <ToolsSearchBar toolsSampleData={toolsSampleData}
                             inputName={inputName}
                             inputCategory={inputCategory}
+                            inputShowOnlyFavorites={inputShowOnlyFavorites}
                             inputSortBy={inputSortBy}
                             onInputNameChange={setInputName}
                             onInputCategoryChange={setInputCategory}
+                            onInputShowOnlyFavoritesChange={setInputShowOnlyFavorites}
                             onInputSortByChange={setInputSortBy}/>
             <ToolsSearchContainer toolsSampleData={toolsSampleData}
                                   inputName={inputName}
                                   inputCategory={inputCategory}
-                                  inputSortBy={inputSortBy}/>
+                                  inputSortBy={inputSortBy}
+                                  inputShowOnlyFavorites={inputShowOnlyFavorites}/>
         </section>
     )
 }
