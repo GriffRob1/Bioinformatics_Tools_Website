@@ -1,48 +1,55 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import ToolDescription from './ToolDescription';
 import BlueButton from "./BlueButton";
 
 
-export default function HomeContent() {
+export default function HomeContent({toolsList}) {
+    let toolsListRef = useRef(toolsList);
+    let tabNumber = useRef(0);
 
-    let toolsSampleData = `[
-        {
-            "id": 0,
-            "popularity": 9,
-            "URL": "/genome-assembler",
-            "imagePath": "/images/favicon.ico",
-            "toolTitle": "Genome Assembler",
-            "textDescription": "Assemble a genome using short nucleotide reads"
-        },
+    //assigns toolsListRef to the 9 most popular tools
+    toolsListRef.current.sort((tool1,tool2) => {
+        if (tool1.popularity > tool2.popularity) return -1;
+        if (tool1.popularity < tool2.popularity) return 1;
+        else return 0;
+    });
+    toolsListRef.current = toolsListRef.current.slice(0,10);
 
-        {
-            "id": 1,
-            "popularity": 5,
-            "URL": "/motif-finder",
-            "imagePath": "/images/logo192.png",
-            "toolTitle": "Motif Finder",
-            "textDescription": "Find a common pattern in a list of reads"
-        },
+    let [toolsListForCurrentTab, setToolsListForCurrentTab] = useState(toolsListRef.current.slice(0,3));
 
-        {
-            "id": 2,
-            "popularity": 3,
-            "URL": "/sequence-alignment",
-            "imagePath": "/images/logo512.png",
-            "toolTitle": "Sequence Alignment",
-            "textDescription": "Align 2 or more reads using an alignment algorithm"
+    const tabRightThroughToolsList = () => {
+        tabNumber.current = (tabNumber.current + 1) % 3;
+        setToolsListForCurrentTab(toolsListRef.current.slice(tabNumber.current * 3, (tabNumber.current * 3) + 3));
+    }
+
+    const tabLeftThroughToolsList = () => {
+        tabNumber.current = (((tabNumber.current - 1) % 3) + 3) % 3;
+        setToolsListForCurrentTab(toolsListRef.current.slice(tabNumber.current * 3, (tabNumber.current * 3) + 3));
+    }
+
+    //navigation dots correspond to the tab number
+    let navigationDots = [];
+    for (let i = 0; i < 3; i++) {
+        let dotStyle;
+        if (i === tabNumber.current) {
+            dotStyle = {backgroundColor: 'black'}
         }
-    ]`
+        else {
+            dotStyle = {backgroundColor: '#bbb'}
+        }
+        navigationDots.push(<div key={i} className={'dot'} style={dotStyle}></div>)
+    }
 
-    toolsSampleData = JSON.parse(toolsSampleData)
 
     return (
       <section className={'container home-content'}>
           <h2 className={'most-popular-tools-title'}>Most Popular Tools</h2>
           <div className={'container most-popular-tools-container'}>
-              <div className={'triangle-left'}></div>
+              <div className={'container triangle-left-container'} onClick={tabLeftThroughToolsList}>
+                  <div className={'triangle-left'}></div>
+              </div>
               <ul className={'container tools-list'}>
-                  {toolsSampleData.map((tool) => (
+                  {toolsListForCurrentTab.map((tool) => (
                       <li key={tool.id}>
                           <ToolDescription
                               id={tool.id}
@@ -56,13 +63,11 @@ export default function HomeContent() {
                       </li>
                   ))}
               </ul>
-              <div className={'triangle-right'}></div>
+              <div className={'container triangle-right-container'} onClick={tabRightThroughToolsList}>
+                  <div className={'triangle-right'}></div>
+              </div>
           </div>
-          <div className={'container dot-container'}>
-              <div className={'dot'}></div>
-              <div className={'dot'}></div>
-              <div className={'dot'}></div>
-          </div>
+          <div className={'container dot-container'}>{navigationDots}</div>
           <BlueButton content={'See All Tools'}
                       URL={'/tools'}
                       buttonClass={'see-all-tools-button'} />

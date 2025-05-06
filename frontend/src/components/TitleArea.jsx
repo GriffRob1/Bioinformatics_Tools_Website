@@ -1,10 +1,8 @@
 import React from 'react';
-import dna_code_image from '../images/dna-code-image.jpg'
-import { useNavigate } from "react-router-dom";
 import BlueButton from "./BlueButton";
 
 const sectionStyle = {
-    backgroundImage: 'url(' + dna_code_image + ')'
+    backgroundImage: 'url(/images/dna-code-image.jpg)'
 }
 
 export default function TitleArea() {

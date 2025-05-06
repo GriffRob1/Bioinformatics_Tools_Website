@@ -1,11 +1,13 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function ToolDescription({id, URL, imagePath, toolTitle, textDescription, isFavoritable=true}) {
 
     let favoritesList = localStorage.getItem('favorites')
-    const [isFavorited, setIsFavorited] = useState((favoritesList.indexOf(id) >= 0));
+    const [isFavorited, setIsFavorited] = useState(
+        favoritesList !== null ? favoritesList.indexOf(id) >= 0 : false
+    );
 
     //adds favorited tools to localStorage and toggles isFavorited
     const onClickHeart = (e) => {

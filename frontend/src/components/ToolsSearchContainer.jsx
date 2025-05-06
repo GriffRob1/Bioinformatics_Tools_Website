@@ -1,19 +1,18 @@
 import React from 'react';
 import ToolDescription from "./ToolDescription";
 
-export default function ToolsSearchContainer({toolsSampleData,
+export default function ToolsSearchContainer({toolsList,
                                               inputName,
                                               inputCategory,
                                               inputSortBy,
                                               inputShowOnlyFavorites}) {
 
-    toolsSampleData = JSON.parse(toolsSampleData)
 
     let filteredTools = [];
     let favoritesList = JSON.parse(localStorage.getItem('favorites'));
 
     //filters tools by favorites, name, and category
-    toolsSampleData.forEach((tool) => {
+    toolsList.forEach((tool) => {
         if (inputShowOnlyFavorites && (favoritesList.indexOf(tool.id) === -1)) {
             return;
         }
@@ -38,7 +37,7 @@ export default function ToolsSearchContainer({toolsSampleData,
         filteredTools.sort((tool1,tool2) => {
             if (tool1.popularity > tool2.popularity) return -1;
             if (tool1.popularity < tool2.popularity) return 1;
-            if (tool1.popularity === tool2.popularity) return 0;
+            else return 0;
         });
     }
     else if (inputSortBy === 'sort-by-newest') {
@@ -47,7 +46,7 @@ export default function ToolsSearchContainer({toolsSampleData,
             const date2 = new Date(tool2.dateAdded)
             if (date1 < date2) return -1;
             if (date1 > date2) return 1;
-            if (date1 === date2) return 0;
+            else return 0;
         });
     }
 

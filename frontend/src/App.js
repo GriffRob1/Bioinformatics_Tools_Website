@@ -1,9 +1,9 @@
-import logo from './/images/logo.svg';
 import './styles/App.css';
 import NavBar from './components/NavBar'
 import Main from './Main'
 import Footer from './components/Footer'
 import {useEffect} from "react";
+import toolsList from "./data/toolsList";
 
 function App() {
 
@@ -17,7 +17,7 @@ function App() {
     return (
         <div className="app">
             <NavBar />
-            <Main />
+            <Main toolsList={toolsList}/>
             <Footer />
         </div>
     );

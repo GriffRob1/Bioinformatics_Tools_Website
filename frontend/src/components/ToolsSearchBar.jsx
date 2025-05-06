@@ -26,9 +26,10 @@ export default function ToolsSearchBar({inputName,
                     <select
                         name={'category'}
                         id={'category'}
+                        value={inputCategory}
                         onChange={(e) => onInputCategoryChange(e.target.value)}
                     >
-                        <option value={''} selected>No Category Selected</option>
+                        <option value={''}>No Category Selected</option>
                         <option value={'Genome Sequencing Tools'}>Genome Sequencing Tools</option>
                         <option value={'Motif Finding Tools'}>Motif Finding Tools</option>
                         <option value={'Sequence Alignment Tools'}>Sequence Alignment Tools</option>
