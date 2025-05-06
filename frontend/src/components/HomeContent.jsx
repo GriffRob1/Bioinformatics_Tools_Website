@@ -4,6 +4,7 @@ import BlueButton from "./BlueButton";
 
 
 export default function HomeContent({toolsList}) {
+
     let toolsListRef = useRef(toolsList);
     let tabNumber = useRef(0);
 
@@ -50,9 +51,9 @@ export default function HomeContent({toolsList}) {
               </div>
               <ul className={'container tools-list'}>
                   {toolsListForCurrentTab.map((tool) => (
-                      <li key={tool.id}>
+                      <li key={tool._id.$oid}>
                           <ToolDescription
-                              id={tool.id}
+                              oid={tool._id.$oid}
                               URL={tool.URL}
                               imagePath={tool.imagePath}
                               toolTitle={tool.toolTitle}

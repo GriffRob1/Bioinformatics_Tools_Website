@@ -9,11 +9,14 @@ export default function ToolsSearchContainer({toolsList,
 
 
     let filteredTools = [];
-    let favoritesList = JSON.parse(localStorage.getItem('favorites'));
+    let favoritesList = localStorage.getItem('favorites')
+    if (favoritesList) {
+        favoritesList = JSON.parse(favoritesList);
+    }
 
     //filters tools by favorites, name, and category
     toolsList.forEach((tool) => {
-        if (inputShowOnlyFavorites && (favoritesList.indexOf(tool.id) === -1)) {
+        if (inputShowOnlyFavorites && (favoritesList.indexOf(tool._id.$oid) === -1)) {
             return;
         }
         let inputNameLowerCase = inputName.toLowerCase();
@@ -54,9 +57,9 @@ export default function ToolsSearchContainer({toolsList,
       <section className={'container tools-search-container'}>
           <div className={'grid-container tools-search-container-list'}>
               {filteredTools.map((tool) => (
-                  <div key={tool.id} className={'container tool-description-container'}>
+                  <div key={tool._id.$oid} className={'container tool-description-container'}>
                       <ToolDescription
-                          id={tool.id}
+                          oid={tool._id.$oid}
                           URL={tool.URL}
                           imagePath={tool.imagePath}
                           toolTitle={tool.toolTitle}

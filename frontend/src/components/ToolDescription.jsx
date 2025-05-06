@@ -2,28 +2,50 @@ import React from 'react';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
-export default function ToolDescription({id, URL, imagePath, toolTitle, textDescription, isFavoritable=true}) {
+export default function ToolDescription({oid, URL, imagePath, toolTitle, textDescription, isFavoritable=true}) {
 
     let favoritesList = localStorage.getItem('favorites')
     const [isFavorited, setIsFavorited] = useState(
-        favoritesList !== null ? favoritesList.indexOf(id) >= 0 : false
+        favoritesList !== null ? favoritesList.indexOf(oid) >= 0 : false
     );
 
-    //adds favorited tools to localStorage and toggles isFavorited
+
+    //updates the tool's popularity on the server
+    function updateToolPopularity() {
+        fetch("http://localhost:5000/update-tool-popularities", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({"oid": oid,"isFavorited": isFavorited})})
+            .then(response => {
+                if (response.ok) {
+                    console.log('successfully updated tool popularity');
+                } else {
+                    console.log('failed to update tool popularity');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+
+
     const onClickHeart = (e) => {
         e.stopPropagation();
 
+        //adds or removes favorites from localStorage
         let newFavoriteArray = JSON.parse(localStorage.getItem('favorites'));
         if (isFavorited) {
-            let index = newFavoriteArray.indexOf(id);
+            let index = newFavoriteArray.indexOf(oid);
             newFavoriteArray.splice(index, 1);
         }
         else {
-            newFavoriteArray.push(id)
+            newFavoriteArray.push(oid)
         }
         localStorage.setItem('favorites', JSON.stringify(newFavoriteArray));
 
         setIsFavorited(!isFavorited);
+        updateToolPopularity();
     }
 
     const heartIconLink = isFavorited ? '/images/filled_in_heart.png' : '/images/empty_heart.png'

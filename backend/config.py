@@ -1,0 +1,1 @@
+MONGO_URI = "mongodb://localhost:27017/bioinformatics_tools_database"
