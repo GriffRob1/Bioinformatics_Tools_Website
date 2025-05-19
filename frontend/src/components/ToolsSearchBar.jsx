@@ -9,7 +9,7 @@ export default function ToolsSearchBar({inputName,
                                         onInputShowOnlyFavoritesChange,
                                         onInputSortByChange}) {
     return (
-        <form className={'container tools-search-bar'} action={'/tools'} method={'GET'}>
+        <form className={'container tools-search-bar'} onSubmit={(e) => e.preventDefault()}>
             <fieldset className={'container filter-section'}>
                 <legend>Filter Tools:</legend>
 
@@ -33,6 +33,7 @@ export default function ToolsSearchBar({inputName,
                         <option value={'Genome Sequencing Tools'}>Genome Sequencing Tools</option>
                         <option value={'Motif Finding Tools'}>Motif Finding Tools</option>
                         <option value={'Sequence Alignment Tools'}>Sequence Alignment Tools</option>
+                        <option value={'Frequent Pattern Finding'}>Frequent Pattern Finding</option>
                     </select>
                 </label>
 

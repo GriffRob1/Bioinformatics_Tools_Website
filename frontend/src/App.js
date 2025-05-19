@@ -2,7 +2,9 @@ import './styles/App.css';
 import NavBar from './components/NavBar'
 import Main from './Main'
 import Footer from './components/Footer'
-import {useEffect, useState} from "react";
+import {createContext, useEffect, useState} from "react";
+
+export const AppContext = createContext(null)
 
 function App() {
 
@@ -35,7 +37,9 @@ function App() {
     return (
         <div className="app">
             <NavBar />
-            <Main toolsList={toolsList}/>
+            <AppContext value={toolsList}>
+                <Main/>
+            </AppContext>
             <Footer />
         </div>
     );

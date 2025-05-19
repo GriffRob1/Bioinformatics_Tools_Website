@@ -28,8 +28,7 @@ export default function BlueButton({content, URL, buttonClass}) {
                 onClick={navigateTo}
                 onMouseOver={setBorderWhite}
                 onMouseOut={setBorderBlack}
-                style={buttonStyle}
-        >
+                style={buttonStyle}>
             {content}
         </button>
     )

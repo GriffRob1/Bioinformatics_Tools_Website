@@ -3,7 +3,7 @@ import {useState} from "react";
 import ToolsSearchBar from "../components/ToolsSearchBar";
 import ToolsSearchContainer from "../components/ToolsSearchContainer";
 
-export default function Tools({toolsList}) {
+export default function Tools() {
     const [inputName, setInputName] = useState('');
     const [inputCategory, setInputCategory] = useState('');
     const [inputShowOnlyFavorites, setInputShowOnlyFavorites] = useState(false);
@@ -20,8 +20,7 @@ export default function Tools({toolsList}) {
                             onInputCategoryChange={setInputCategory}
                             onInputShowOnlyFavoritesChange={setInputShowOnlyFavorites}
                             onInputSortByChange={setInputSortBy}/>
-            <ToolsSearchContainer toolsList={toolsList}
-                                  inputName={inputName}
+            <ToolsSearchContainer inputName={inputName}
                                   inputCategory={inputCategory}
                                   inputSortBy={inputSortBy}
                                   inputShowOnlyFavorites={inputShowOnlyFavorites}/>

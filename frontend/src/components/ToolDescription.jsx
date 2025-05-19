@@ -9,7 +9,6 @@ export default function ToolDescription({oid, URL, imagePath, toolTitle, textDes
         favoritesList !== null ? favoritesList.indexOf(oid) >= 0 : false
     );
 
-
     //updates the tool's popularity on the server
     function updateToolPopularity() {
         fetch("http://localhost:5000/update-tool-popularities", {
@@ -32,10 +31,11 @@ export default function ToolDescription({oid, URL, imagePath, toolTitle, textDes
 
     const onClickHeart = (e) => {
         e.stopPropagation();
+        setIsFavorited(!isFavorited);
 
         //adds or removes favorites from localStorage
         let newFavoriteArray = JSON.parse(localStorage.getItem('favorites'));
-        if (isFavorited) {
+        if (isFavorited) { //value of isFavorited is from before toggle, since it only gets updated after render
             let index = newFavoriteArray.indexOf(oid);
             newFavoriteArray.splice(index, 1);
         }
@@ -44,7 +44,6 @@ export default function ToolDescription({oid, URL, imagePath, toolTitle, textDes
         }
         localStorage.setItem('favorites', JSON.stringify(newFavoriteArray));
 
-        setIsFavorited(!isFavorited);
         updateToolPopularity();
     }
 
@@ -52,7 +51,7 @@ export default function ToolDescription({oid, URL, imagePath, toolTitle, textDes
 
     const navigate = useNavigate();
     const navigateToToolPage = () => {
-        navigate(URL);
+        navigate(`/tool-page/${URL}`);
     }
 
     return (

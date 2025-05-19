@@ -1,32 +1,34 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import ToolDescription from "./ToolDescription";
+import {AppContext} from "../App";
 
-export default function ToolsSearchContainer({toolsList,
-                                              inputName,
+export default function ToolsSearchContainer({inputName,
                                               inputCategory,
                                               inputSortBy,
                                               inputShowOnlyFavorites}) {
 
+    const toolsList = useContext(AppContext);
 
-    let filteredTools = [];
     let favoritesList = localStorage.getItem('favorites')
     if (favoritesList) {
         favoritesList = JSON.parse(favoritesList);
     }
 
-    //filters tools by favorites, name, and category
+    //filters tools by name, category, and favorites
+    let filteredTools = [];
     toolsList.forEach((tool) => {
-        if (inputShowOnlyFavorites && (favoritesList.indexOf(tool._id.$oid) === -1)) {
-            return;
-        }
         let inputNameLowerCase = inputName.toLowerCase();
         let toolTitleLowerCase = tool.toolTitle.toLowerCase()
         if (toolTitleLowerCase.indexOf(inputNameLowerCase) === -1) {
             return;
         }
-        if (tool.category.indexOf(inputCategory) === -1 ) {
+        if (tool.category.indexOf(inputCategory) === -1 ) { //indexOf ensures the default option "" of inputCategory shows all tools
             return;
         }
+        if (inputShowOnlyFavorites && (favoritesList.indexOf(tool._id.$oid) === -1)) {
+            return;
+        }
+
         filteredTools.push(tool);
     });
 
@@ -47,8 +49,8 @@ export default function ToolsSearchContainer({toolsList,
         filteredTools.sort((tool1,tool2) => {
             const date1 = new Date(tool1.dateAdded)
             const date2 = new Date(tool2.dateAdded)
-            if (date1 < date2) return -1;
-            if (date1 > date2) return 1;
+            if (date1 > date2) return -1;
+            if (date1 < date2) return 1;
             else return 0;
         });
     }

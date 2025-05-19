@@ -1,10 +1,12 @@
-import React, {useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import ToolDescription from './ToolDescription';
 import BlueButton from "./BlueButton";
+import {AppContext} from "../App";
 
 
-export default function HomeContent({toolsList}) {
+export default function HomeContent() {
 
+    const toolsList = useContext(AppContext);
     let toolsListRef = useRef(toolsList);
     let tabNumber = useRef(0);
 
@@ -14,7 +16,7 @@ export default function HomeContent({toolsList}) {
         if (tool1.popularity < tool2.popularity) return 1;
         else return 0;
     });
-    toolsListRef.current = toolsListRef.current.slice(0,10);
+    toolsListRef.current = toolsListRef.current.slice(0,9);
 
     let [toolsListForCurrentTab, setToolsListForCurrentTab] = useState(toolsListRef.current.slice(0,3));
 
@@ -24,7 +26,7 @@ export default function HomeContent({toolsList}) {
     }
 
     const tabLeftThroughToolsList = () => {
-        tabNumber.current = (((tabNumber.current - 1) % 3) + 3) % 3;
+        tabNumber.current = (((tabNumber.current - 1) % 3) + 3) % 3; //formula for modulus with negative numbers
         setToolsListForCurrentTab(toolsListRef.current.slice(tabNumber.current * 3, (tabNumber.current * 3) + 3));
     }
 
@@ -68,7 +70,9 @@ export default function HomeContent({toolsList}) {
                   <div className={'triangle-right'}></div>
               </div>
           </div>
-          <div className={'container dot-container'}>{navigationDots}</div>
+          <div className={'container dot-container'}>
+              {navigationDots}
+          </div>
           <BlueButton content={'See All Tools'}
                       URL={'/tools'}
                       buttonClass={'see-all-tools-button'} />
