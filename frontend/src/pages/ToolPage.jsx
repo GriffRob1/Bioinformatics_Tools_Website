@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import {useParams} from "react-router-dom";
+import {Spinner} from '@radix-ui/themes'
 import {AppContext} from "../App";
 
 export default function ToolPage() {
@@ -11,6 +12,7 @@ export default function ToolPage() {
     const [currentTool, setCurrentTool] = useState(null);
     const [inputText, setInputText] = useState(null);
     const [outputText, setOutputText] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const textInputRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -74,6 +76,8 @@ export default function ToolPage() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        setIsLoading(true);
+
         fetch(`http://localhost:5000/tool-page/submit/${currentTool.URL}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -82,10 +86,12 @@ export default function ToolPage() {
             .then((response) => response.json())
             .then((data) => {
                 setOutputText(data.result);
+                setIsLoading(false);
             })
             .catch((error) => {
                 console.log(error.message)
                 setOutputText('error fetching algorithm from server');
+                setIsLoading(false);
             })
     }
 
@@ -98,6 +104,8 @@ export default function ToolPage() {
             <div className={'container tool-form-container'}>
                 <p>Input format:</p>
                 <p className={'input-format'}>{currentTool.inputFormat}</p>
+                <p>Output format:</p>
+                <p className={'output-format'}>{currentTool.outputFormat}</p>
                 <p>Example:</p>
                 <code className={'input-example'}>{currentTool.inputExample}</code>
                 <p className={'input-instructions'}>Input either in text box or as .txt file</p>
@@ -109,7 +117,9 @@ export default function ToolPage() {
                     <button className={'blue-button'} type={'submit'}>Calculate</button>
                 </form>
             </div>
-            <p>{outputText}</p>
+            {isLoading ? <Spinner /> : ''}
+            <p>Result:</p>
+            <p className={'output-text'}>{outputText}</p>
         </section>
     );
 }

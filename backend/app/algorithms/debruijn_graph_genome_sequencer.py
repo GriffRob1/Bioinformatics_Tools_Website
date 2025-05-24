@@ -1,22 +1,13 @@
 import random
 import copy
 
-
-
-# O(k)
-def hamming_distance(str1, str2):
-    if (len(str1) != len(str2)):
-        return -1
-    mismatches = 0
-    for i in range(0, len(str1)):
-        if (str1[i] != str2[i]):
-            mismatches += 1
-    return mismatches
+from .DnaAbox_finder import hamming_distance
 
 
 
 # O(n)
 def kmer_composition(k, text):
+    k = int(k)
     kmers = []
     for i in range(len(text) - k + 1):
         kmers.append(text[i:i+k])
@@ -36,26 +27,27 @@ def path_to_genome(kmers):
 
 # O(n)
 # translates a sequence of read pairs to a single genome string, checking for correct alignment.
-def read_pairs_path_to_genome(all_pairs_string, d):
+def read_pairs_path_to_genome(d, all_pairs_string):
+    d = int(d)
     genome = ''
     all_pairs_array = read_pairs_string_to_array(all_pairs_string)# O(n)
     num_pairs = len(all_pairs_array)
     k = len(all_pairs_array[0][0]) # here k represents the length of one side of the read pair, which is technically 1 less than the actual k for the data
 
-    for i in range(k+d+1):
+    for i in range(k+d):
         genome += all_pairs_array[i][0][0]
 
-    for i in range(k+d+1, num_pairs-1):
-        if all_pairs_array[i][0][0] != all_pairs_array[i - (k+d+1)][1][0]:
-            raise Exception('not a valid path')
+    for i in range(k+d, num_pairs-1):
+        if all_pairs_array[i][0][0] != all_pairs_array[i - (k+d)][1][0]:
+            raise Exception(f'not a valid path {i} {k} {all_pairs_array[i]} {all_pairs_array[i - (k+d)]}')
         else:
             genome += all_pairs_array[i][0][0]
 
     last_pair = all_pairs_array[num_pairs - 1]
     #the corresponding pair, where the second pattern is the same as the first pattern in last_pair
-    corresponding_pair = all_pairs_array[num_pairs - (2 + k + d)]
+    corresponding_pair = all_pairs_array[num_pairs - (1 + k + d)]
     if last_pair[0] != corresponding_pair[1]:
-        raise Exception('not a valid path')
+        raise Exception(f'not a valid path')
     else:
         genome += last_pair[0]
 
@@ -114,7 +106,7 @@ def overlap_graph_from_kmers(kmers):
 
 
 # O(n)
-def debrujin_graph_from_text(k, text):
+def debruijn_graph_from_text(k, text):
     graph = {}
     for i in range(len(text) - k + 1):# n
         graph[text[i:i+k]] = []
@@ -126,7 +118,7 @@ def debrujin_graph_from_text(k, text):
 
 
 # O(n)
-def debrujin_graph_from_kmers(kmers):
+def debruijn_graph_from_kmers_with_degrees(kmers):
     graph = {}
     for kmer in kmers:# n
         add_adjacent_node(graph, prefix(kmer), suffix(kmer))# O(1)
@@ -135,7 +127,16 @@ def debrujin_graph_from_kmers(kmers):
 
 
 # O(n)
-def paired_debrujin_graph(all_pairs_string):
+def debruijn_graph_from_kmers(kmers):
+    graph = {}
+    for kmer in kmers:# n
+        add_adjacent_node(graph, prefix(kmer), suffix(kmer))# O(1)
+    return remove_degrees(graph)
+
+
+
+# O(n)
+def paired_debruijn_graph_with_degrees(all_pairs_string):
     graph = {}
     all_pairs_array = read_pairs_string_to_array(all_pairs_string)# O(n)
     for pair in all_pairs_array:  # n
@@ -143,6 +144,18 @@ def paired_debrujin_graph(all_pairs_string):
         end_node = suffix(pair[0]) + '|' + suffix(pair[1])
         add_adjacent_node(graph, start_node, end_node)  # O(1)
     return graph
+
+
+
+# O(n)
+def paired_debruijn_graph(all_pairs_string):
+    graph = {}
+    all_pairs_array = read_pairs_string_to_array(all_pairs_string)# O(n)
+    for pair in all_pairs_array:  # n
+        start_node = prefix(pair[0]) + '|' + prefix(pair[1])
+        end_node = suffix(pair[0]) + '|' + suffix(pair[1])
+        add_adjacent_node(graph, start_node, end_node)  # O(1)
+    return remove_degrees(graph)
 
 
 
@@ -248,15 +261,15 @@ def find_eulerian_cycle(graph, start_node):
 
 
 # O(V+E)
-def debrujin_assembler(kmers):
-    debrujin_graph = debrujin_graph_from_kmers(kmers)# O(n)
-    eulerian_path = find_eulerian_path(debrujin_graph)# O(V+E)
+def debruijn_assembler(kmers):
+    debruijn_graph = debruijn_graph_from_kmers_with_degrees(kmers)# O(n)
+    eulerian_path = find_eulerian_path(debruijn_graph)# O(V+E)
     return path_to_genome(eulerian_path)# O(n)
 
 
 
 # O(V+E)
-def debrujin_assembler_read_pairs(all_pairs, d):
-    read_pair_graph = paired_debrujin_graph(all_pairs)# O(n)
+def debruijn_assembler_read_pairs(d, all_pairs):
+    read_pair_graph = paired_debruijn_graph_with_degrees(all_pairs)# O(n)
     all_pairs_string = find_eulerian_path(read_pair_graph)# O(V+E)
-    return read_pairs_path_to_genome(all_pairs_string, d)# O(n)
+    return read_pairs_path_to_genome(int(d)+1, all_pairs_string)# O(n)

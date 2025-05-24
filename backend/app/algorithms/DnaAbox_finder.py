@@ -81,7 +81,7 @@ def frequent_words_mismatch_reverse_complement(distance, k, text):
     frequent_patterns = []
     for i in range(0, len(text) - k + 1):
         pattern = text[i : i + k]
-        neighborhood = neighbors(pattern, distance) # O(k^2)
+        neighborhood = neighbors(distance, pattern) # O(k^2)
         for neighbor in neighborhood:
             if neighbor in frequency_map:
                 frequency_map[neighbor] += 1
@@ -122,13 +122,17 @@ def reverse_complement(pattern):
 
 
 # O(n^2)
-def find_clumps(genome, k , window_size, minimum_occurrences):
+def find_clumps(k, window_size, minimum_occurrences, genome):
+    k = int(k)
+    window_size = int(window_size)
+    minimum_occurrences = int(minimum_occurrences)
+
     clump_patterns = []
     for i in range(0, len(genome) - window_size + 1):
         frequency_map = generate_frequency_table(genome[i:i + window_size], k) # O(n)
         for kmer in frequency_map:
             if (frequency_map[kmer] >= minimum_occurrences):
-                clump_patterns.append(kmer)
+                clump_patterns.append((i, kmer))
     return list(set(clump_patterns))
 
 
@@ -165,7 +169,7 @@ def min_skew_indices(genome):
 # O(k)
 def hamming_distance(str1, str2):
     if (len(str1) != len(str2)):
-        return -1
+        raise Exception('length of strings are not equal')
     mismatches = 0
     for i in range(0, len(str1)):
         if (str1[i] != str2[i]):
@@ -175,13 +179,14 @@ def hamming_distance(str1, str2):
 
 
 # O(k^2)
-def neighbors(pattern, distance):
+def neighbors(distance, pattern):
+    distance = int(distance)
     if distance == 0:
         return {pattern}
     if len(pattern) == 1:
         return {"A", "C", "G", "T"}
     neighborhood = set()
-    suffix_neighbors = neighbors(pattern[1:], distance) # T(k-1)
+    suffix_neighbors = neighbors(distance, pattern[1:]) # T(k-1)
     for text in suffix_neighbors:
         if (hamming_distance(pattern[1:], text) < distance): # O(k)
             for x in {"A","C","G","T"}:
@@ -193,7 +198,11 @@ def neighbors(pattern, distance):
 
 
 # O(n)
-def find_potential_dnaa_boxes(genome, k, distance, window_size, window_location):
+def find_potential_dnaa_boxes(k, distance, window_size, window_location, genome):
+    k = int(k)
+    distance = int(distance)
+    window_size = int(window_size)
+
     min_skew = min_skew_indices(genome) # O(n)
     first_index = min_skew[0]
     last_index = min_skew[len(min_skew) - 1]
@@ -206,4 +215,4 @@ def find_potential_dnaa_boxes(genome, k, distance, window_size, window_location)
             ori_region = genome[first_index - int(window_size / 2): last_index + int(window_size / 2)]
         case _:
             raise Exception("invalid window location")
-    return frequent_words_mismatch_reverse_complement(ori_region, k, distance)# O(s*k^2)
+    return frequent_words_mismatch_reverse_complement(distance, k, ori_region)# O(s*k^2)

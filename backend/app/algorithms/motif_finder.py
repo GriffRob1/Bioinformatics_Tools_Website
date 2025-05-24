@@ -3,24 +3,8 @@ from itertools import product
 import numpy as np
 import random
 
-
-
-# O(k^2)
-# output: k^d
-def neighbors(pattern, distance):
-    if distance == 0:
-        return {pattern}
-    if len(pattern) == 1:
-        return {"A", "C", "G", "T"}
-    neighborhood = set()
-    suffix_neighbors = neighbors(pattern[1:], distance)
-    for text in suffix_neighbors:
-        if (hamming_distance(pattern[1:], text) < distance):
-            for x in {"A","C","G","T"}:
-                neighborhood.add(x + text)
-        else:
-            neighborhood.add(pattern[0] + text)
-    return neighborhood
+from .DnaAbox_finder import neighbors
+from .DnaAbox_finder import hamming_distance
 
 
 
@@ -31,18 +15,6 @@ def approx_pattern_occurs(text, pattern, distance):
         if hamming_distance(pattern, window) <= distance:
             return True
     return False
-
-
-
-# O(k)
-def hamming_distance(str1, str2):
-    if (len(str1) != len(str2)):
-        return -1
-    mismatches = 0
-    for i in range(0, len(str1)):
-        if (str1[i] != str2[i]):
-            mismatches += 1
-    return mismatches
 
 
 
@@ -84,6 +56,25 @@ def total_min_score(pattern, dna):
 
 
 
+# O(t*n*k)
+# finds the motif in each strand that is closest to pattern
+def closest_motif_from_each_strand(pattern, dna):
+    best_motifs = []
+    k = len(pattern)
+    for text in dna:
+        min_distance = hamming_distance(pattern, text[0:k])# O(k)
+        min_distance_motif = text[0:k]
+        for i in range(1, len(text) - k + 1):
+            distance = hamming_distance(pattern, text[i:i+k])# O(k)
+            motif = text[i:i+k]
+            if distance < min_distance:
+                min_distance_motif = motif
+                min_distance = distance
+        best_motifs.append(min_distance_motif)
+    return best_motifs
+
+
+
 # O(n^2*t^2*k)
 # brute force: checks all patterns in dna
 def median_string(dna, k):
@@ -101,7 +92,8 @@ def median_string(dna, k):
 
 
 # O(4^k*t*n*k)
-def median_string_all_kmers(dna, k):
+def median_string_all_kmers(k, dna):
+    k = int(k)
     min_score = sys.maxsize
     median = ""
     all_kmers = generate_all_kmers(k)# O(4^k)
@@ -110,7 +102,7 @@ def median_string_all_kmers(dna, k):
         if score < min_score:
             min_score = score
             median = kmer
-    return median
+    return closest_motif_from_each_strand(median, dna)
 
 
 
@@ -118,6 +110,7 @@ def median_string_all_kmers(dna, k):
 # creates a count matrix for given motifs
 def count_matrix(motifs):
     profile_matrix = np.zeros((4, len(motifs[0])))
+    profile_matrix = profile_matrix.tolist()
     for i in range(0, len(motifs[0])):
         for j in range(0, len(motifs)):
             match (motifs[j][i]):
@@ -132,6 +125,17 @@ def count_matrix(motifs):
                 case _:
                     print("not a valid character")
                     return
+    return profile_matrix
+
+
+
+# O(t*k)
+# creates a profile matrix for given motifs
+def profile_no_psuedocounts(motifs):
+    profile_matrix = count_matrix(motifs)# O(t*k)
+    for i in range(0, len(profile_matrix)):
+        for j in range(0, len(profile_matrix[0])):
+            profile_matrix[i][j] = profile_matrix[i][j] / len(motifs)
     return profile_matrix
 
 
@@ -169,7 +173,18 @@ def consensus(motifs):
             case 3:
                 consensus_string += "T"
     return consensus_string
-        
+
+
+
+# O(t*k)
+# generates the score of a list of motifs
+def score(motifs):
+    score = 0
+    consensus_string = consensus(motifs)# O(t*k)
+    for motif in motifs:
+        score += hamming_distance(consensus_string, motif)# O(k)
+    return score
+
 
 
 # O(k)
@@ -206,20 +221,10 @@ def profile_most_probable_kmer(text, k, profile):
 
 
 
-# O(t*k)
-# generates the score of a list of motifs
-def score(motifs):
-    score = 0
-    consensus_string = consensus(motifs)# O(t*k)
-    for motif in motifs:
-        score += hamming_distance(consensus_string, motif)# O(k)
-    return score
-
-
-
 # O(n^2*t*k)
 # for every kmer in the first strand, this adds the profile most probable kmer then adds that to the profile matrix
-def greedy_motif_search(dna, k):
+def greedy_motif_search(k, dna):
+    k = int(k)
     best_motifs = []
     for line in dna:
         best_motifs.append(line[:k])
@@ -267,7 +272,9 @@ def randomized_motif_search(dna, k):
 
 
 # O(i*r*n*t*k)
-def iterate_randomized_motif_search(dna, k, iterations):
+def iterate_randomized_motif_search(k, iterations, dna):
+    k = int(k)
+    iterations = int(iterations)
     best_score = score(randomized_motif_search(dna, k))# O(r*n*t*k)
     best_motifs = []
     for i in range(iterations):
@@ -323,7 +330,10 @@ def gibbs_sampler(dna, k, repeats):
 
 
 # O(i*r*n*k)
-def iterate_gibbs_sampler(dna, k, repeats, iterations):
+def iterate_gibbs_sampler(k, repeats, iterations, dna):
+    k = int(k)
+    repeats = int(repeats)
+    iterations = int(iterations)
     best_motifs = gibbs_sampler(dna, k, repeats)# O(r*n*k)
     best_score = score(best_motifs)
     for i in range(iterations):
