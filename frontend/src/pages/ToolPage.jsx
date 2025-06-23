@@ -1,14 +1,9 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import {useParams} from "react-router-dom";
 import {Spinner} from '@radix-ui/themes'
-import {AppContext} from "../App";
 
-export default function ToolPage() {
+export default function ToolPage({toolsList, setToolsList}) {
     const {toolURL} = useParams();
-
-    const toolsList = useContext(AppContext);
-    console.log(toolsList)
-
     const [currentTool, setCurrentTool] = useState(null);
     const [inputText, setInputText] = useState(null);
     const [outputText, setOutputText] = useState('');

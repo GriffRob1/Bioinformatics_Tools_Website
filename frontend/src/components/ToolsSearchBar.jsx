@@ -33,6 +33,7 @@ export default function ToolsSearchBar({inputName,
                         <option value={'Frequent Pattern Finding'}>Frequent Pattern Finding</option>
                         <option value={'Motif Finding'}>Motif Finding</option>
                         <option value={'Genome Assembly'}>Genome Assembly</option>
+                        <option value={'Cyclopeptide Sequencing'}>Cyclopeptide Sequencing</option>
                     </select>
                 </label>
 
@@ -54,7 +55,6 @@ export default function ToolsSearchBar({inputName,
                         <input type={'radio'}
                                name={'sort-by'}
                                value={'sort-by-most-popular'}
-                               checked={inputSortBy === 'sort-by-most-popular'}
                                onChange={(e) => onInputSortByChange(e.target.value)}/>
                     </label>
 
@@ -71,6 +71,7 @@ export default function ToolsSearchBar({inputName,
                         <input type={'radio'}
                                name={'sort-by'}
                                value={'sort-by-newest'}
+                               checked={inputSortBy === 'sort-by-newest'}
                                onChange={(e) => onInputSortByChange(e.target.value)}/>
                     </label>
                 </div>

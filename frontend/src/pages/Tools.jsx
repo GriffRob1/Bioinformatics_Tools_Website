@@ -3,11 +3,13 @@ import {useState} from "react";
 import ToolsSearchBar from "../components/ToolsSearchBar";
 import ToolsSearchContainer from "../components/ToolsSearchContainer";
 
-export default function Tools() {
+export default function Tools({toolsList, setToolsList}) {
     const [inputName, setInputName] = useState('');
     const [inputCategory, setInputCategory] = useState('');
     const [inputShowOnlyFavorites, setInputShowOnlyFavorites] = useState(false);
-    const [inputSortBy, setInputSortBy] = useState('sort-by-most-popular');
+    const [inputSortBy, setInputSortBy] = useState('sort-by-newest');
+    console.log('tools render:')
+    console.log(toolsList)
 
     return (
         <section className={'container tools-page'}>
@@ -23,7 +25,9 @@ export default function Tools() {
             <ToolsSearchContainer inputName={inputName}
                                   inputCategory={inputCategory}
                                   inputSortBy={inputSortBy}
-                                  inputShowOnlyFavorites={inputShowOnlyFavorites}/>
+                                  inputShowOnlyFavorites={inputShowOnlyFavorites}
+                                  toolsList={toolsList}
+                                  setToolsList={setToolsList}/>
         </section>
     )
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -8,24 +8,6 @@ export default function ToolDescription({oid, URL, imagePath, toolTitle, textDes
     const [isFavorited, setIsFavorited] = useState(
         favoritesList !== null ? favoritesList.indexOf(oid) >= 0 : false
     );
-
-    //updates the tool's popularity on the server
-    function updateToolPopularity() {
-        fetch("http://localhost:5000/update-tool-popularities", {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({"oid": oid,"isFavorited": isFavorited})})
-            .then(response => {
-                if (response.ok) {
-                    console.log('successfully updated tool popularity');
-                } else {
-                    console.log('failed to update tool popularity');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
 
 
 
@@ -46,6 +28,28 @@ export default function ToolDescription({oid, URL, imagePath, toolTitle, textDes
 
         updateToolPopularity();
     }
+
+
+
+    //updates the tool's popularity on the server
+    function updateToolPopularity() {
+        fetch("http://localhost:5000/update-tool-popularities", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({"oid": oid,"isFavorited": isFavorited})})
+            .then(response => {
+                if (response.ok) {
+                    console.log('successfully updated tool popularity');
+                } else {
+                    console.log('failed to update tool popularity');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+
 
     const heartIconLink = isFavorited ? '/images/filled_in_heart.png' : '/images/empty_heart.png'
 

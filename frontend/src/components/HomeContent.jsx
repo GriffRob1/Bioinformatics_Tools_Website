@@ -1,12 +1,12 @@
 import React, {useContext, useRef, useState} from 'react';
 import ToolDescription from './ToolDescription';
 import BlueButton from "./BlueButton";
-import {AppContext} from "../App";
 
 
-export default function HomeContent() {
-
-    const toolsList = useContext(AppContext);
+export default function HomeContent({toolsList, setToolsList}) {
+    console.log("home content render")
+    console.log(toolsList)
+    console.log(setToolsList)
     let toolsListRef = useRef(toolsList);
     let tabNumber = useRef(0);
 

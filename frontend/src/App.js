@@ -4,13 +4,11 @@ import Main from './Main'
 import Footer from './components/Footer'
 import {createContext, useEffect, useState} from "react";
 
-export const AppContext = createContext(null)
-
 function App() {
 
     const [toolsList, setToolsList] = useState('Loading...');
     const [isLoading, setIsLoading] = useState(true);
-
+    console.log(isLoading)
     //runs once when website first loads
     useEffect(() => {
         //initializes favorites for first-time users
@@ -23,7 +21,10 @@ function App() {
             .then((response) => response.json())
             .then((data) => {
                 setToolsList(data);
-                setIsLoading(false)
+                console.log(isLoading)
+                setIsLoading(false);
+                console.log(isLoading)
+                console.log('successfully fetched tools list')
             })
             .catch((err) => {
                 setToolsList("Failed to connect");
@@ -34,12 +35,14 @@ function App() {
     //waits for tools list to be fetched before loading page
     if (isLoading) return;
 
+    console.log("App render:")
+    console.log(isLoading)
+    console.log(toolsList)
+
     return (
         <div className="app">
             <NavBar />
-            <AppContext value={toolsList}>
-                <Main/>
-            </AppContext>
+            <Main toolsList={toolsList} setToolsList={setToolsList}/>
             <Footer />
         </div>
     );

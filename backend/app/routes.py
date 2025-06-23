@@ -31,7 +31,13 @@ from .algorithms.debruijn_graph_genome_sequencer import paired_debruijn_graph
 from .algorithms.debruijn_graph_genome_sequencer import debruijn_assembler
 from .algorithms.debruijn_graph_genome_sequencer import debruijn_assembler_read_pairs
 
-
+from .algorithms.cyclopeptide_sequencer import transcribe
+from .algorithms.cyclopeptide_sequencer import translate
+from .algorithms.cyclopeptide_sequencer import linear_and_cyclo_peptide_spectrum
+from .algorithms.cyclopeptide_sequencer import brute_force_cyclopeptide_sequencer
+from .algorithms.cyclopeptide_sequencer import cyclopeptide_sequencing_ideal_spectrum
+from .algorithms.cyclopeptide_sequencer import leaderboard_cyclopeptide_sequencer
+from .algorithms.cyclopeptide_sequencer import convolution_cyclopeptide_sequencing
 
 
 api = Blueprint('api', __name__)
@@ -41,10 +47,13 @@ api = Blueprint('api', __name__)
 @api.route('/tools-list')
 def get_tools_list():
     mongo = current_app.extensions['pymongo']
-    mongo.db.tools.delete_many({})
+    #mongo.db.tools.delete_many({})
     if mongo.db.tools.count_documents({}) == 0:
         mongo.db.tools.insert_many(tools_list)
     return jsonify(mongo.db.tools.find({}))
+
+
+
 
 
 
@@ -63,6 +72,8 @@ def update_tool_popularities():
 
 
 
+
+
 @api.route('/tool-page/submit/<algorithm_name>', methods=['POST'])
 def call_algorithm(algorithm_name):
     mongo = current_app.extensions['pymongo']
@@ -70,7 +81,7 @@ def call_algorithm(algorithm_name):
     all_input_arguments = request.get_json()['inputText'].split()
 
     # handles tools with a list argument
-    if current_tool['hasListArgument']:
+    if current_tool['listArgumentIndex'] >= 0:
         index = current_tool['listArgumentIndex']
         arguments = all_input_arguments[:index] + [all_input_arguments[index:]]
     else:
@@ -90,13 +101,19 @@ def call_algorithm(algorithm_name):
     if type(result) is set:
         result = "\n".join(result)
 
-    if type(result) is dict:
+    elif type(result) is tuple:
+        temp_result = []
+        for item in result:
+            temp_result.append(str(item))
+        result = "\n".join(temp_result)
+
+    elif type(result) is dict:
         temp_result = []
         for key in result:
             temp_result.append(f'{key}: {', '.join(result[key])}')
         result = "\n".join(temp_result)
 
-    if type(result) is list:
+    elif type(result) is list:
         for i in range(0,len(result)):
             result[i] = str(result[i])
         result = "\n".join(result)

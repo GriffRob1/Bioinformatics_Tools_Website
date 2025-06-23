@@ -1,14 +1,15 @@
 import React, {useContext} from 'react';
 import ToolDescription from "./ToolDescription";
-import {AppContext} from "../App";
 
 export default function ToolsSearchContainer({inputName,
                                               inputCategory,
                                               inputSortBy,
-                                              inputShowOnlyFavorites}) {
+                                              inputShowOnlyFavorites,
+                                              toolsList,
+                                              setToolsList}) {
 
-    const toolsList = useContext(AppContext);
-
+    console.log("tools search container render: ")
+    console.log(toolsList)
     let favoritesList = localStorage.getItem('favorites')
     if (favoritesList) {
         favoritesList = JSON.parse(favoritesList);
@@ -16,6 +17,7 @@ export default function ToolsSearchContainer({inputName,
 
     //filters tools by name, category, and favorites
     let filteredTools = [];
+    console.log(toolsList)
     toolsList.forEach((tool) => {
         let inputNameLowerCase = inputName.toLowerCase();
         let toolTitleLowerCase = tool.toolTitle.toLowerCase()

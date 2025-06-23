@@ -11,7 +11,6 @@ tools_list = [
         'inputFormat': 'distance (d) - the maximum number of mismatches for a string to be considered an approximate occurrence of the input pattern\npattern - the pattern being searched for\ntext - the full text that the pattern is being searched for in',
         'outputFormat': '[index, occurrence]\nindex - the location in text where the approximate pattern occurs\noccurrence - the pattern at that index',
         'inputExample': '1\nAGGA\nAGGATCGAGATTACGAATGCTAGATATCG',
-        'hasListArgument': False,
         'listArgumentIndex': -1
     },
     {
@@ -26,7 +25,6 @@ tools_list = [
         'inputFormat': 'distance (d) - the maximum number of mismatches for two patterns to be counted for the same kmer\nk - the length of the frequent kmers you are searching for\ntext - the text in which you are searching for frequent kmers',
         'outputFormat': 'pattern - the most frequent pattern with mismatches and reverse complement (can be multiple)',
         'inputExample': '1\n5\nAGGATCGAGATTACGATTGCTAGATATCG',
-        'hasListArgument': False,
         'listArgumentIndex': -1
     },
     {
@@ -41,7 +39,6 @@ tools_list = [
         'inputFormat': 'string - the dna string',
         'outputFormat': 'reverse complement - the reverse complement of the dna string',
         'inputExample': 'AGGATCGAGATTACGAATGCTAGATATCG\n',
-        'hasListArgument': False,
         'listArgumentIndex': -1
     },
     {
@@ -56,7 +53,6 @@ tools_list = [
         'inputFormat': 'k - the length of the kmers\nwindow size - the length of the area where kmers could clump\nminimum occurrences - the minimum number of occurrences of a kmer in a small section for it to be considered a clump\ntext - the text in which you are searching for clumps',
         'outputFormat': '(index, kmer)\nindex - the index in text of the start of the window where there is a clump\nkmer - the kmer that is clumped in a window starting at index',
         'inputExample': '3\n20\n4\nAGGATCGAGATTACGAATGGATCGTATAGCGTAGATAGCGTATAAGAGATCGCGTCTTAGAGATTAAGCTAGGCTACTAGATATCG',
-        'hasListArgument': False,
         'listArgumentIndex': -1
     },
     {
@@ -71,7 +67,6 @@ tools_list = [
         'inputFormat': 'genome - the genome you are calculating the skew for',
         'outputFormat': 'skew matrix - a list of skews at every point in the genome',
         'inputExample': 'AGGATCGAGATTACGAATGGATCGTATAGCGTAGATAGCGTATAAGAGATCGCGTCTTAGAGATTAAGCTAGGCTACTAGATATCG',
-        'hasListArgument': False,
         'listArgumentIndex': -1
     },
     {
@@ -86,7 +81,6 @@ tools_list = [
         'inputFormat': 'string 1 - the first string\nstring 2 - the second string',
         'outputFormat': 'hamming distance - the hamming distance between the strings',
         'inputExample': 'CTGATCGAGATGACGAATGATAGATATCG\nAGGATCGAGATTACGAATGCTAGATATCG\n',
-        'hasListArgument': False,
         'listArgumentIndex': -1
     },
     {
@@ -101,7 +95,6 @@ tools_list = [
         'inputFormat': 'distance (d) - the distance between the pattern and its neighbors\npattern - the pattern you want to find the neighbors of',
         'outputFormat': 'neighbors list - a list of all the neighbors to a pattern',
         'inputExample': '2\nAGGA',
-        'hasListArgument': False,
         'listArgumentIndex': -1
     },
     {
@@ -116,7 +109,6 @@ tools_list = [
         'inputFormat': 'k - the length of the DnaA box\ndistance (d) - the maximum number of mismatches for a pattern to be counted as an occurrence of the DnaA box\nwindow size - the size of the region around the minimum skew where you want to search for a DnaA box\nwindow location - the location of the window around the minimum skew index, the only options are "before", "after", and "centered"\ngenome - the genome in which you want to find a DnaA box',
         'outputFormat': 'DnaA boxes - a list of potential DnaA boxes (may be multiple)',
         'inputExample': '3\n1\n30\nafter\nATATAGTAGATAAGGTATCGATTTAGCGATCGATTCGGCTATCGTTCGCCTCTCATATCTTCTATCTTAGCATGCTATGCTACTGCTAGGATCGTACGTCAGGCGACGCGAGCGGACGGCGTATCGACGTACTAGCGCTAGCTACTG',
-        'hasListArgument': False,
         'listArgumentIndex': -1
     },
 
@@ -144,7 +136,6 @@ tools_list = [
         'inputFormat': 'motifs - a list of motifs, each on a new line. Motifs must be the same length',
         'outputFormat': 'count matrix - The rows count nucleotides in this order, from top to bottom: A,C,G,T. The columns represent each position of the motif.',
         'inputExample': 'CTTGATAGG\nCATCATAAG\nCTTGTTAGG\nCCTGATAGT\nCTTAATTGG',
-        'hasListArgument': True,
         'listArgumentIndex': 0
     },
     {
@@ -159,7 +150,6 @@ tools_list = [
         'inputFormat': 'motifs - a list of motifs, each on a new line. Motifs must be the same length',
         'outputFormat': 'profile matrix - The rows count nucleotides in this order, from top to bottom: A,C,G,T. The columns represent each position of the motif.',
         'inputExample': 'CTTGATAGG\nCATCATAAG\nCTTGTTAGG\nCCTGATAGT\nCTTAATTGG',
-        'hasListArgument': True,
         'listArgumentIndex': 0
     },
     {
@@ -174,7 +164,6 @@ tools_list = [
         'inputFormat': 'motifs - a list of motifs, each on a new line. Motifs must be the same length',
         'outputFormat': 'consensus string - the consensus string',
         'inputExample': 'CTTGATAGG\nCATCATAAG\nCTTGTTAGG\nCCTGATAGT\nCTTAATTGG',
-        'hasListArgument': True,
         'listArgumentIndex': 0
     },
     {
@@ -189,7 +178,6 @@ tools_list = [
         'inputFormat': 'motifs - a list of motifs, each on a new line. Motifs must be the same length',
         'outputFormat': 'score - the score of the motifs',
         'inputExample': 'CTTGATAGG\nCATCATAAG\nCTTGTTAGG\nCCTGATAGT\nCTTAATTGG',
-        'hasListArgument': True,
         'listArgumentIndex': 0
     },
     {
@@ -204,7 +192,6 @@ tools_list = [
         'inputFormat': 'k - the length of the motifs\ndna - a list of dna sequences that you are searching for motifs in',
         'outputFormat': 'best motifs - a set of motifs, one from each dna sequence',
         'inputExample': '4\nGATAGGTCGCGTATAGATTCGATACGCTAG\nGATCGATATGCGGCTATAGCTAGCTAGCGA\nTGAGTCGGCTAGTAGCGCTAGTATCTCCGA\nTAGGCTGAGATCTCTGGATTAGGCAGATCG',
-        'hasListArgument': True,
         'listArgumentIndex': 1
     },
     {
@@ -219,7 +206,6 @@ tools_list = [
         'inputFormat': 'k - the length of the motifs\ndna - a list of dna sequences that you are searching for motifs in',
         'outputFormat': 'best motifs - a set of motifs, one from each dna sequence',
         'inputExample': '4\nGATAGGTCGCGTATAGATTCGATACGCTAG\nGATCGATATGCGGCTATAGCTAGCTAGCGA\nTGAGTCGGCTAGTAGCGCTAGTATCTCCGA\nTAGGCTGAGATCTCTGGATTAGGCAGATCG',
-        'hasListArgument': True,
         'listArgumentIndex': 1
     },
     {
@@ -234,7 +220,6 @@ tools_list = [
         'inputFormat': 'k - the length of the motifs\niterations - the number of iterations for the algorithm to do. More iterations means a slower calculation but more accurate results.\ndna - a list of dna sequences that you are searching for motifs in',
         'outputFormat': 'best motifs - a set of motifs, one from each dna sequence',
         'inputExample': '4\n10\nGATAGGTCGCGTATAGATTCGATACGCTAG\nGATCGATATGCGGCTATAGCTAGCTAGCGA\nTGAGTCGGCTAGTAGCGCTAGTATCTCCGA\nTAGGCTGAGATCTCTGGATTAGGCAGATCG',
-        'hasListArgument': True,
         'listArgumentIndex': 2
     },
     {
@@ -249,7 +234,6 @@ tools_list = [
         'inputFormat': 'k - the length of the motifs\nrepeats - the number of repeats the gibbs sampler does for one interation\niterations - the number of iterations of the gibbs sampler. Each iteration randomly selects new starting motifs.\ndna - a list of dna sequences that you are searching for motifs in',
         'outputFormat': 'best motifs - a set of motifs, one from each dna sequence',
         'inputExample': '4\n10\n20\nGATAGGTCGCGTATAGATTCGATACGCTAG\nGATCGATATGCGGCTATAGCTAGCTAGCGA\nTGAGTCGGCTAGTAGCGCTAGTATCTCCGA\nTAGGCTGAGATCTCTGGATTAGGCAGATCG',
-        'hasListArgument': True,
         'listArgumentIndex': 3
     },
 
@@ -282,7 +266,6 @@ tools_list = [
         'inputFormat': 'k - the length of the kmers\ntext - the text you want to get the kmer composition of',
         'outputFormat': 'kmers - the list of kmers',
         'inputExample': '3\nAGGATATAGGATCGA',
-        'hasListArgument': False,
         'listArgumentIndex': -1
     },
     {
@@ -297,7 +280,6 @@ tools_list = [
         'inputFormat': 'kmers - the list of kmers',
         'outputFormat': 'genome - the completed genome',
         'inputExample': 'AGG\nGGA\nGAT\nATA\nTAT\nATA\nTAG\nAGG\nGGA\nGAT\nATC\nTCG\nCGA',
-        'hasListArgument': True,
         'listArgumentIndex': 0
     },
     {
@@ -312,7 +294,6 @@ tools_list = [
         'inputFormat': 'd - the distance in between the reads in the pair\nread pairs - the list of read pairs, with the read pair separated by a | symbol.',
         'outputFormat': 'genome - the completed genome',
         'inputExample': '3\nAGG|TAG\nGGA|AGG\nGAT|GGA\nATA|GAT\nTAT|ATC\nATA|TCG\nTAG|CGA\nAGG|GAG\nGGA|AGA\nGAT|GAT',
-        'hasListArgument': True,
         'listArgumentIndex': 1
     },
     {
@@ -327,7 +308,6 @@ tools_list = [
         'inputFormat': 'kmers - the list of kmers',
         'outputFormat': 'graph - the adjacency list',
         'inputExample': 'CGA\nAGG\nGAT\nATA\nTAG\nATA\nATC\nGGA\nGGA\nGAT\nTAT\nTCG\nAGG',
-        'hasListArgument': True,
         'listArgumentIndex': 0
     },
     {
@@ -342,7 +322,6 @@ tools_list = [
         'inputFormat': 'read pairs - the list of read pairs',
         'outputFormat': 'graph - the adjacency list',
         'inputExample': 'ATA|GAT\nTAT|ATC\nGAT|GGA\nAGG|TAG\nGGA|AGG\nATA|TCG\nGGA|AGA\nGAT|GAT\nTAG|CGA\nAGG|GAG',
-        'hasListArgument': True,
         'listArgumentIndex': 0
     },
     {
@@ -357,7 +336,6 @@ tools_list = [
         'inputFormat': 'reads - the reads used to assemble the genome',
         'outputFormat': 'genome - the completed genome',
         'inputExample': 'CGA\nAGG\nGAT\nATA\nTAG\nATA\nATC\nGGA\nGGA\nGAT\nTAT\nTCG\nAGG',
-        'hasListArgument': True,
         'listArgumentIndex': 0
     },
     {
@@ -372,7 +350,107 @@ tools_list = [
         'inputFormat': 'd - the distance in between the reads in the pair\nread pairs - the read pairs used to assemble the genome',
         'outputFormat': 'genome - the completed genome',
         'inputExample': '3\nATA|GAT\nTAT|ATC\nGAT|GGA\nAGG|TAG\nGGA|AGG\nATA|TCG\nGGA|AGA\nGAT|GAT\nTAG|CGA\nAGG|GAG',
-        'hasListArgument': True,
         'listArgumentIndex': 1
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {
+        'popularity': 0,
+        'URL': 'transcribe',
+        'imagePath': "/images/Cyclopeptide Sequencing Icon.png",
+        'toolTitle': 'Transcribe DNA',
+        'textDescription': 'Transcribe a DNA sequence into RNA',
+        'dateAdded': "2025-06-04T09:38:00",
+        'category': "Cyclopeptide Sequencing",
+        'longDescription': 'This tool replaces all the T\'s with U\'s in the DNA sequence, transcribing it into RNA.',
+        'inputFormat': 'DNA - the DNA sequence',
+        'outputFormat': 'RNA -  the transcribed RNA sequence',
+        'inputExample': 'ACCGATAGCTATAGCGCT',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'translate',
+        'imagePath': "/images/Cyclopeptide Sequencing Icon.png",
+        'toolTitle': 'Translate RNA',
+        'textDescription': 'Translate an RNA sequence into an amino acid sequence',
+        'dateAdded': "2025-06-04T09:38:00",
+        'category': "Cyclopeptide Sequencing",
+        'longDescription': 'This tool generates an amino acid sequence from the given RNA sequence, stopping either when the string ends or when it reaches a stop codon.',
+        'inputFormat': 'RNA - the RNA sequence',
+        'outputFormat': 'Protein - the translated amino acid sequence, in single letter amino acid code',
+        'inputExample': 'ACCGAUAGCUAUAGCGCU',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'linear_and_cyclo_peptide_spectrum',
+        'imagePath': "/images/Cyclopeptide Sequencing Icon.png",
+        'toolTitle': 'Peptide Spectrum',
+        'textDescription': 'Generate the theoretical linear and cyclical spectra of a peptide',
+        'dateAdded': "2025-06-04T09:38:00",
+        'category': "Cyclopeptide Sequencing",
+        'longDescription': 'This tool generates two theoretical mass spectra of a peptide, one assuming the peptide is linear, and one assuming it is cyclical. This is a simplified mass spectra, so instead of a mass/charge ratio, this simply calculates the mass of each subpeptide.',
+        'inputFormat': 'peptide - the peptide that the spectra are being generated for, in single letter amino acid code format.',
+        'outputFormat': 'linear spectrum - the spectrum if the peptide is linear\ncyclical spectrum - the spectrum if the peptide is cyclical',
+        'inputExample': 'TDSYSA',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'brute_force_cyclopeptide_sequencer',
+        'imagePath': "/images/Cyclopeptide Sequencing Icon.png",
+        'toolTitle': 'Brute Force Cyclopeptide Sequencer',
+        'textDescription': 'Sequence a spectrum by checking all possible cyclopeptides',
+        'dateAdded': "2025-06-04T09:38:00",
+        'category': "Cyclopeptide Sequencing",
+        'longDescription': 'This tool is a very inefficient algorithm that checks all possible cyclopeptides for a match with the given spectrum.',
+        'inputFormat': 'spectrum - the spectrum you want to sequence. This is a list of masses separated by whitespace.',
+        'outputFormat': 'peptide - the peptide that matches the spectrum',
+        'inputExample': '0 87 101 115 188 202 216 303',
+        'listArgumentIndex': 0
+    },
+    {
+        'popularity': 0,
+        'URL': 'leaderboard_cyclopeptide_sequencer',
+        'imagePath': "/images/Cyclopeptide Sequencing Icon.png",
+        'toolTitle': '',
+        'textDescription': '',
+        'dateAdded': "2025-06-04T09:38:00",
+        'category': "Cyclopeptide Sequencing",
+        'longDescription': '',
+        'inputFormat': '',
+        'outputFormat': '',
+        'inputExample': '',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'convolution_cyclopeptide_sequencing',
+        'imagePath': "/images/Cyclopeptide Sequencing Icon.png",
+        'toolTitle': '',
+        'textDescription': '',
+        'dateAdded': "2025-06-04T09:38:00",
+        'category': "Cyclopeptide Sequencing",
+        'longDescription': '',
+        'inputFormat': '',
+        'outputFormat': '',
+        'inputExample': '',
+        'listArgumentIndex': -1
     },
 ]
