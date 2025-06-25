@@ -38,7 +38,7 @@ from .algorithms.cyclopeptide_sequencer import brute_force_cyclopeptide_sequence
 from .algorithms.cyclopeptide_sequencer import cyclopeptide_sequencing_ideal_spectrum
 from .algorithms.cyclopeptide_sequencer import leaderboard_cyclopeptide_sequencer
 from .algorithms.cyclopeptide_sequencer import convolution_cyclopeptide_sequencing
-
+from .algorithms.cyclopeptide_sequencer import amino_acid_masses_to_letters
 
 api = Blueprint('api', __name__)
 
@@ -47,9 +47,9 @@ api = Blueprint('api', __name__)
 @api.route('/tools-list')
 def get_tools_list():
     mongo = current_app.extensions['pymongo']
-    #mongo.db.tools.delete_many({})
-    if mongo.db.tools.count_documents({}) == 0:
-        mongo.db.tools.insert_many(tools_list)
+    mongo.db.tools.delete_many({})
+    #if mongo.db.tools.count_documents({}) == 0:
+    mongo.db.tools.insert_many(tools_list)
     return jsonify(mongo.db.tools.find({}))
 
 

@@ -6,10 +6,9 @@ import Home from './pages/Home';
 import Tools from './pages/Tools';
 import About from './pages/About';
 import ToolPage from "./pages/ToolPage";
+import {ScrollRestoration} from "react-router-dom";
 
 export default function Main({toolsList, setToolsList}) {
-    console.log("main render:")
-    console.log(toolsList)
     return (
         <Routes>
             <Route exact path='/' element={<Home toolsList={toolsList} setToolsList={setToolsList}/>}></Route>

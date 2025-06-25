@@ -8,8 +8,6 @@ export default function Tools({toolsList, setToolsList}) {
     const [inputCategory, setInputCategory] = useState('');
     const [inputShowOnlyFavorites, setInputShowOnlyFavorites] = useState(false);
     const [inputSortBy, setInputSortBy] = useState('sort-by-newest');
-    console.log('tools render:')
-    console.log(toolsList)
 
     return (
         <section className={'container tools-page'}>

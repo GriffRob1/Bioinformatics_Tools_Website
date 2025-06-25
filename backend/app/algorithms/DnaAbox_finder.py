@@ -147,13 +147,14 @@ def find_skew(genome):
         elif char == "G":
             skew_amount += 1
         skew_array.append(skew_amount)
-    return skew_array
+    return [skew_array]
 
 
 
 # O(n)
 def min_skew_indices(genome):
     skew_array = find_skew(genome) # O(n)
+    skew_array = skew_array[0]
     min = skew_array[0]
     min_index_array = []
     for i in range(0, len(genome)):

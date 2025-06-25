@@ -8,8 +8,7 @@ export default function ToolsSearchContainer({inputName,
                                               toolsList,
                                               setToolsList}) {
 
-    console.log("tools search container render: ")
-    console.log(toolsList)
+
     let favoritesList = localStorage.getItem('favorites')
     if (favoritesList) {
         favoritesList = JSON.parse(favoritesList);
@@ -17,7 +16,6 @@ export default function ToolsSearchContainer({inputName,
 
     //filters tools by name, category, and favorites
     let filteredTools = [];
-    console.log(toolsList)
     toolsList.forEach((tool) => {
         let inputNameLowerCase = inputName.toLowerCase();
         let toolTitleLowerCase = tool.toolTitle.toLowerCase()

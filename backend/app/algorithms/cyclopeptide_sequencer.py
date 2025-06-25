@@ -110,6 +110,19 @@ def translate(rna):
 
 
 
+def amino_acid_masses_to_letters(masses):
+    masses = [int(item) for item in masses]
+    peptide = ''
+    mass_to_letter = {v: k for k, v in amino_acid_mass.items()}
+    for mass in masses:
+        if mass in mass_to_letter.keys():
+            peptide += mass_to_letter[mass]
+        else:
+            peptide += '?'
+    return peptide
+
+
+
 def cyclopeptide_to_spectrum(cyclopeptide):
     masses = [0, peptide_mass(cyclopeptide)] # initialize with full cyclopeptide as one of its subpeptides
     length = len(cyclopeptide)
@@ -262,6 +275,7 @@ def linear_and_cyclo_peptide_score(peptide, spectrum):
 
 def leaderboard_cyclopeptide_sequencer(n, spectrum):
     n = int(n)
+    spectrum = [int(item) for item in spectrum]
     global max_score_peptide
     parent_mass = spectrum[-1]
     leaderboard = [([0],1,1)]
@@ -280,7 +294,7 @@ def leaderboard_cyclopeptide_sequencer(n, spectrum):
             max_score_peptide = max(leaderboard, key=lambda item: item[2])
         if max_score_peptide[2] > leader_peptide[2]:
             leader_peptide = max_score_peptide
-    return leader_peptide
+    return leader_peptide[0][1:]
 
 
 
@@ -311,6 +325,7 @@ def filter_convolution(convolution, m):
 def convolution_cyclopeptide_sequencing(m, n, spectrum):
     m = int(m)
     n = int(n)
+    spectrum = [int(item) for item in spectrum]
     global max_score_peptide
     parent_mass = spectrum[-1]
     leaderboard = [([0],1,1)]
@@ -330,7 +345,7 @@ def convolution_cyclopeptide_sequencing(m, n, spectrum):
             max_score_peptide = max(leaderboard, key=lambda item: item[2])
         if max_score_peptide[2] > leader_peptide[2]:
             leader_peptide = max_score_peptide
-    return leader_peptide
+    return leader_peptide[0][1:]
 
 
 
@@ -358,7 +373,6 @@ def trim_leaderboard(leaderboard, spectrum, n):
         i += 1
 
     return new_leaderboard[:i]
-
 
 
 

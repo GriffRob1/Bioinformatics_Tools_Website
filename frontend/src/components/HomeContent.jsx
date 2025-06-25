@@ -4,9 +4,6 @@ import BlueButton from "./BlueButton";
 
 
 export default function HomeContent({toolsList, setToolsList}) {
-    console.log("home content render")
-    console.log(toolsList)
-    console.log(setToolsList)
     let toolsListRef = useRef(toolsList);
     let tabNumber = useRef(0);
 
