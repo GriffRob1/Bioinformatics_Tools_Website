@@ -1,0 +1,39 @@
+.nav-bar {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    color: white;
+}
+
+.nav-bar a {
+    text-decoration: none;
+}
+
+.nav-bar h1 {
+    justify-content: flex-start;
+    color: white;
+    margin: 5px;
+}
+
+.nav-bar ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.nav-bar ul li {
+    padding: 20px;
+}
+
+.nav-bar ul li a {
+    color: white;
+}
+
+.sign-in-button{
+    padding: 3px;
+    font-size: 1em;
+}

@@ -2,7 +2,7 @@ import './styles/App.css';
 import NavBar from './components/NavBar'
 import Main from './Main'
 import Footer from './components/Footer'
-import {createContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 
 function App() {
 
@@ -27,8 +27,6 @@ function App() {
                 setToolsList("Failed to connect");
                 setIsLoading(false)
             });
-
-        window.scrollTo(0, 0); //scrolls to top
     }, []);
 
     //waits for tools list to be fetched before loading page

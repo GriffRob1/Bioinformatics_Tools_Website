@@ -1,0 +1,15 @@
+.tools-page {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.search-tools-title {
+    margin: 20px;
+    font-size: 5vh;
+}
+
+.scroll-to-top-button {
+    margin: 10px;
+    font-size: 1em;
+}

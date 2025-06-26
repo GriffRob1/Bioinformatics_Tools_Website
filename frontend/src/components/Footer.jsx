@@ -1,11 +1,12 @@
+import '../styles/Footer.css';
 import React from 'react';
 
 export default function Footer() {
     return (
         <footer className={'container footer'}>
-            <div className={'copyright-information'}>Copyright 2025 by Big Griff LLC. All Rights Reserved.</div>
+            <div className={'copyright-information'}>Copyright 2025 by Placeholder LLC. All Rights Reserved.</div>
             <div className={'container social-media'}>
-                <p>Follow us on social media!</p>
+                <p>Social media placeholders</p>
                 <a href={'https://www.facebook.com'} target={'blank'}>
                     <img alt={'facebook'} src={'/images/317727_facebook_social media_social_icon.svg'}/>
                 </a>

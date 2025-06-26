@@ -1,4 +1,5 @@
-import React, {useContext} from 'react';
+import '../styles/ToolsSearchContainer.css';
+import React from 'react';
 import ToolDescription from "./ToolDescription";
 
 export default function ToolsSearchContainer({inputName,

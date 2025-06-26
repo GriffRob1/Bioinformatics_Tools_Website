@@ -1,0 +1,51 @@
+.tools-search-bar {
+    width: 80%;
+    height: 30vh;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: black;
+    background-color: lightgray;
+    font-size: 3vh;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.filter-section {
+    justify-content: space-around;
+}
+
+.sort-section {
+    flex-direction: column;
+}
+
+.sorting-radio-buttons {
+    flex-direction: column;
+    margin-left: 5%;
+}
+
+.tools-search-bar fieldset label input, #category {
+    margin-left: 10px;
+}
+
+.tools-search-bar fieldset label {
+    display: flex;
+    align-items: center;
+}
+
+.tools-search-bar fieldset label input,
+.tools-search-bar fieldset label select {
+    font-size: inherit;
+}
+
+.tools-search-bar fieldset label input[type=checkbox],
+.tools-search-bar fieldset label input[type=radio] {
+    transform: scale(1.5);
+}
+
+.search-button {
+    height: 15%;
+    width: 10%;
+    font-size: 80%;
+}

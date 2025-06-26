@@ -1,7 +1,9 @@
+import '../styles/Tools.css';
 import React from 'react';
 import {useState} from "react";
 import ToolsSearchBar from "../components/ToolsSearchBar";
 import ToolsSearchContainer from "../components/ToolsSearchContainer";
+import BlueButton from "../components/BlueButton";
 
 export default function Tools({toolsList, setToolsList}) {
     const [inputName, setInputName] = useState('');
@@ -26,6 +28,7 @@ export default function Tools({toolsList, setToolsList}) {
                                   inputShowOnlyFavorites={inputShowOnlyFavorites}
                                   toolsList={toolsList}
                                   setToolsList={setToolsList}/>
+            <BlueButton onClick={() => window.scrollTo(0,0)} buttonClass={'scroll-to-top-button'}>Scroll to top</BlueButton>
         </section>
     )
 }

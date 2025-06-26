@@ -1,4 +1,5 @@
-import React, {useContext, useRef, useState} from 'react';
+import '../styles/HomeContent.css';
+import React, {useRef, useState} from 'react';
 import ToolDescription from './ToolDescription';
 import BlueButton from "./BlueButton";
 
@@ -70,9 +71,7 @@ export default function HomeContent({toolsList, setToolsList}) {
           <div className={'container dot-container'}>
               {navigationDots}
           </div>
-          <BlueButton content={'See All Tools'}
-                      URL={'/tools'}
-                      buttonClass={'see-all-tools-button'} />
+          <BlueButton URL={'/tools'} buttonClass={'see-all-tools-button'}>See All Tools</BlueButton>
       </section>
     );
 }

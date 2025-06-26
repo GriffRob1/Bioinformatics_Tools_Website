@@ -1,0 +1,25 @@
+.about-page {
+    height: 100vh;
+    flex-direction: column;
+    align-items: initial;
+    justify-content: space-around;
+    margin: 10px;
+}
+
+.about-page > p,
+.about-page > ul {
+    margin-left: 3vw;
+}
+
+.about-subtitle {
+    margin: 10px 0;
+}
+
+.about-list{
+    list-style-type: disc;
+}
+
+#chatgpt-note {
+    margin: 0;
+    font-size: 0.9em;
+}

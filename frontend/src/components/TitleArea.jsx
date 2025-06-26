@@ -1,3 +1,4 @@
+import '../styles/TitleArea.css';
 import React from 'react';
 import BlueButton from "./BlueButton";
 
@@ -12,9 +13,7 @@ export default function TitleArea() {
             <div className={'title-area'}>
                 <h1 className={'title'}>Bioinformatics Tools</h1>
                 <p>Essential tools for analysing biological data</p>
-                <BlueButton content={'What is Bioinformatics?'}
-                            URL={'/about'}
-                            buttonClass={'what-is-bioinformatics-button'}/>
+                <BlueButton URL={'/about'} buttonClass={'what-is-bioinformatics-button'}>What is Bioinformatics?</BlueButton>
             </div>
         </section>
     )

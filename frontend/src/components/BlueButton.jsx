@@ -2,7 +2,7 @@ import React from 'react'
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
-export default function BlueButton({content, URL, buttonClass}) {
+export default function BlueButton({children, URL, buttonClass, onClick}) {
 
     const [isMouseOver, setIsMouseover] = useState(false);
 
@@ -19,17 +19,21 @@ export default function BlueButton({content, URL, buttonClass}) {
     }
 
     const navigate = useNavigate();
-    const navigateTo = () => {
+    const onButtonClick = () => {
+        if (onClick) {
+            onClick();
+        }
         navigate(URL);
     }
 
     return (
         <button className={`blue-button ${buttonClass}`}
-                onClick={navigateTo}
+                onClick={onButtonClick}
                 onMouseOver={setBorderWhite}
                 onMouseOut={setBorderBlack}
-                style={buttonStyle}>
-            {content}
+                style={buttonStyle}
+                >
+            {children}
         </button>
     )
 

@@ -1,0 +1,28 @@
+.footer {
+    height: 30px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: white;
+}
+
+.footer div {
+    margin: 5px;
+}
+
+.social-media {
+    justify-content: space-around;
+    align-items: center;
+}
+
+.social-media p {
+    margin: 3px;
+}
+
+.social-media img {
+    filter: none;
+    height: 25px;
+    aspect-ratio: 1/1;
+    margin: 3px;
+}

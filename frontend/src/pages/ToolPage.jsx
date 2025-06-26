@@ -1,6 +1,8 @@
-import React, {useContext, useEffect, useRef, useState} from 'react'
+import '../styles/ToolPage.css';
+import React, {useEffect, useRef, useState} from 'react'
 import {useParams} from "react-router-dom";
 import {Spinner} from '@radix-ui/themes'
+import BlueButton from "../components/BlueButton";
 
 export default function ToolPage({toolsList, setToolsList}) {
     const {toolURL} = useParams();
@@ -94,6 +96,7 @@ export default function ToolPage({toolsList, setToolsList}) {
 
     return (
         <section className={'container tool-page'}>
+            <BlueButton URL={'/tools'} buttonClass={'back-to-all-tools-button'}>Back to all tools</BlueButton>
             <h1>{currentTool.toolTitle}</h1>
             <p>{currentTool.longDescription}</p>
             <div className={'container tool-form-container'}>

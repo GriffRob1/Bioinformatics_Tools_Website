@@ -1,0 +1,74 @@
+.tool-page {
+    margin: 0;
+    padding: 20px 10vh;
+    width: 100%;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tool-page h1 {
+    font-size: 5vh;
+}
+
+.input-format,
+.output-format {
+    white-space: pre-line;
+    margin-left: 3em;
+}
+
+.input-example {
+    white-space: pre-line;
+    background-color: white;
+    padding: 3px;
+}
+
+.input-instructions {
+    margin: 15px 0 0 0;
+}
+
+.tool-form-container {
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+    padding: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 20px;
+    background-color: lightgray;
+}
+
+.tool-form-container hr {
+    border-color: black;
+}
+
+.tool-form {
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tool-form > * {
+    margin: 10px;
+}
+
+.algorithm-text-input {
+    height: 6em;
+}
+
+.remove-file-button {
+    width: max-content;
+    padding: 2px;
+    margin-top: 0;
+}
+
+.output-text {
+    width: 100%;
+    white-space: pre-line;
+    text-wrap: wrap;
+}
+
+.back-to-all-tools-button {
+    position: absolute;
+    left: 20px;
+}

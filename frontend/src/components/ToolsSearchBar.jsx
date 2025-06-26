@@ -1,3 +1,4 @@
+import '../styles/ToolsSearchBar.css';
 import React from 'react';
 
 export default function ToolsSearchBar({inputName,

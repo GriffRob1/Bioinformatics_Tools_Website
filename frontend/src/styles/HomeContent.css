@@ -1,0 +1,31 @@
+.home-content {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    height: 100vh;
+}
+
+.most-popular-tools-container {
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.most-popular-tools-title {
+    margin: 20px;
+    font-size: 3em;
+}
+
+.see-all-tools-button {
+    font-size: 2em;
+    padding: 3px;
+    margin: 20px;
+}
+
+.tools-list {
+    width: 60%;
+    list-style-type: none;
+    justify-content: space-between;
+    align-items: center;
+}
