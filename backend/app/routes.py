@@ -47,9 +47,9 @@ api = Blueprint('api', __name__)
 @api.route('/tools-list')
 def get_tools_list():
     mongo = current_app.extensions['pymongo']
-    mongo.db.tools.delete_many({})
-    #if mongo.db.tools.count_documents({}) == 0:
-    mongo.db.tools.insert_many(tools_list)
+    #mongo.db.tools.delete_many({})
+    if mongo.db.tools.count_documents({}) == 0:
+        mongo.db.tools.insert_many(tools_list)
     return jsonify(mongo.db.tools.find({}))
 
 
