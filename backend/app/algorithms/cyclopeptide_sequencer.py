@@ -373,33 +373,3 @@ def trim_leaderboard(leaderboard, spectrum, n):
         i += 1
 
     return new_leaderboard[:i]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''tyrocidine_b1 = 'VKLFPWFNQY'
-
-spectrum1 = cyclopeptide_to_spectrum(tyrocidine_b1)
-spectrum2 = '0 97 99 114 128 147 147 163 186 227 241 242 244 260 261 262 283 291 333 340 357 385 389 390 390 405 430 430 447 485 487 503 504 518 543 544 552 575 577 584 632 650 651 671 672 690 691 738 745 747 770 778 779 804 818 819 820 835 837 875 892 917 932 932 933 934 965 982 989 1030 1039 1060 1061 1062 1078 1080 1081 1095 1136 1159 1175 1175 1194 1194 1208 1209 1223 1225 1322'
-spectrum2 = spectrum2.split()
-spectrum2 = [int(mass) for mass in spectrum2]
-spectrum3 = '0 97 99 113 114 115 128 128 147 147 163 186 227 241 242 244 244 256 260 261 262 283 291 309 333 340 347 357 385 388 389 390 390 405 430 430 435 447 485 487 503 504 518 543 544 552 575 577 584 599 608 631 632 650 651 653 671 672 690 691 717 738 745 747 770 778 779 804 818 819 827 835 837 875 892 892 917 932 932 933 934 965 982 989 1031 1039 1060 1061 1062 1078 1080 1081 1095 1136 1159 1175 1175 1194 1194 1208 1209 1223 1225 1322'
-spectrum3 = spectrum3.split()
-spectrum3 = [int(mass) for mass in spectrum3]
-
-print(spectrum2)
-print(spectral_convolution(cyclopeptide_to_spectrum('NQEL')))
-print(convolution_cyclopeptide_sequencing(spectrum3, 12, 1000))
-print(leaderboard_cyclopeptide_sequencer(spectrum3, 1000))'''

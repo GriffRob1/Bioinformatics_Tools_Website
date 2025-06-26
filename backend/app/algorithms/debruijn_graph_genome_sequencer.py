@@ -273,5 +273,3 @@ def debruijn_assembler_read_pairs(d, all_pairs):
     read_pair_graph = paired_debruijn_graph_with_degrees(all_pairs)# O(n)
     all_pairs_string = find_eulerian_path(read_pair_graph)# O(V+E)
     return read_pairs_path_to_genome(int(d)+1, all_pairs_string)# O(n)
-
-print('h')
