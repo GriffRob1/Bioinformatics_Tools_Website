@@ -3,8 +3,8 @@ from itertools import product
 import numpy as np
 import random
 
-from .DnaAbox_finder import neighbors
-from .DnaAbox_finder import hamming_distance
+from DnaAbox_finder import neighbors
+from DnaAbox_finder import hamming_distance
 
 
 
