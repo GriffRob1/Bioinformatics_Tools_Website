@@ -1,5 +1,6 @@
 from collections import deque
 
+
 class Edge:
     def __init__(self, source=None, target=None, weight=1):
         self.source = source
@@ -107,8 +108,36 @@ class Graph:
         longest_path.append(source_id)
 
         longest_path.reverse()
-        return longest_path
+        return longest_path, scores[sink_id][0]
 
 
+
+    def longest_path_DAG_local_alignment(self, source_id, sink_id):
+        scores = {} # stores tuples (score, backtracking_id)
+        for node_id in self.nodes:
+            scores[node_id] = (float('-inf'), None)
+        scores[source_id] = (0, None)
+
+        sorted_graph = self.topological_ordering()
+        sorted_graph = sorted_graph[1:] # remove the source node
+        for node in sorted_graph:
+            max_score_tuple = (0, '0-0')
+            for edge in node.in_edges:
+                score = scores[edge.source.id][0] + edge.weight
+                if score > max_score_tuple[0]:
+                    max_score_tuple = (score, edge.source.id)
+            scores[node.id] = max_score_tuple
+
+        # backtracking
+        longest_path = []
+        temp_node_id = max(scores, key=lambda id: scores[id][0])
+        while temp_node_id != source_id:
+            longest_path.append(temp_node_id)
+            temp_node_id = scores[temp_node_id][1]
+        longest_path.append(source_id)
+
+        longest_path.reverse()
+        max_id = max(scores, key=lambda id: scores[id][0])
+        return longest_path, scores[max_id][0]
 
 
