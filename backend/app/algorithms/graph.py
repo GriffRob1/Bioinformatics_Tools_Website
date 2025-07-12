@@ -18,6 +18,9 @@ class Edge:
 
 
 
+
+
+
 class Node:
     def __init__(self, id, value=None):
         self.id = id
@@ -33,6 +36,9 @@ class Node:
 
     def __eq__(self, other):
         return self.id == other.id
+
+
+
 
 
 
@@ -110,7 +116,6 @@ class Graph:
             if len(node.in_edges) != 0:
                 scores[node.id] = max([(scores[edge.source.id][0] + edge.weight, edge.source.id) for edge in node.in_edges])
 
-
         # backtracking
         longest_path = []
         temp_node_id = sink_id
@@ -124,61 +129,5 @@ class Graph:
 
 
 
-    def longest_path_DAG_local_alignment(self, source_id, sink_id):
-        scores = {} # stores tuples (score, backtracking_id)
-        for node_id in self.nodes:
-            scores[node_id] = (float('-inf'), None)
-        scores[source_id] = (0, None)
 
-        sorted_graph = self.topological_ordering()
-        sorted_graph = sorted_graph[1:] # remove the source node
-        for node in sorted_graph:
-            max_score_tuple = (0, '0-0')
-            for edge in node.in_edges:
-                score = scores[edge.source.id][0] + edge.weight
-                if score > max_score_tuple[0]:
-                    max_score_tuple = (score, edge.source.id)
-            scores[node.id] = max_score_tuple
-
-        # backtracking
-        longest_path = []
-        temp_node_id = max(scores, key=lambda id: scores[id][0])
-        while temp_node_id != source_id:
-            longest_path.append(temp_node_id)
-            temp_node_id = scores[temp_node_id][1]
-        longest_path.append(source_id)
-
-        longest_path.reverse()
-        max_id = max(scores, key=lambda id: scores[id][0])
-        return longest_path, scores, scores[max_id][0]
-
-
-
-    def longest_path_affine_gap_penalty(self, sink_id):
-        scores = {} # stores tuples (score, backtracking_id)
-        lengths = sink_id.split('-')
-        seq1_length = int(lengths[0])
-        seq2_length = int(lengths[1])
-        scores['0-0'] = (0, None)
-        for i in range(seq1_length + 1):
-            scores[f'I-{i}-{0}'] = (float('-inf'), None)
-        for j in range(seq2_length + 1):
-            scores[f'D-{0}-{j}'] = (float('-inf'), None)
-
-        sorted_graph = self.topological_ordering()
-        sorted_graph = sorted_graph[1:]
-        for node in sorted_graph:
-            if len(node.in_edges) != 0:
-                scores[node.id] = max([(scores[edge.source.id][0] + edge.weight, edge.source.id) for edge in node.in_edges])
-
-        # backtracking
-        longest_path = []
-        temp_node_id = sink_id
-        while temp_node_id != '0-0':
-            longest_path.append(temp_node_id)
-            temp_node_id = scores[temp_node_id][1]
-        longest_path.append('0-0')
-
-        longest_path.reverse()
-        return longest_path, scores[sink_id][0]
 

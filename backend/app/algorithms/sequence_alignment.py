@@ -1,38 +1,14 @@
 from graph import Graph
 from motif_finder import hamming_distance
 
+DNA_KEY = ['A', 'C', 'G', 'T']
 
-
-'''
-        g     a     g     g     a
-    0-0 - 0-1   0-2   0-3   0-4   0-5
-  a           \t      
-    1-0   1-1   1-2   1-3   1-4   1-5
-  g                 \t           
-    2-0   2-1   2-2   2-3   2-4   2-5
-  g                       \t
-    3-0   3-1   3-2   3-3   3-4   3-5
-  a                          |   
-    4-0   4-1   4-2   4-3   4-4   4-5
-  a                             \t 
-    5-0   5-1   5-2   5-3   5-4   5-5
-    
-    - insertion
-    | deletion
-    \t match or mismatch
-    
-    -aggaa
-    gagg-a
-    
-'''
-dna_matrix = [[1, -1, -1, -1],
+DNA_MATRIX = [[1, -1, -1, -1],
               [-1, 1, -1, -1],
               [-1, -1, 1, -1],
               [-1, -1, -1, 1]]
 
-dna_list = ['A', 'C', 'G', 'T']
-
-BLOSUM62_key = ['A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G','H', 'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V', 'B', 'J', 'Z', 'X']
+BLOSUM62_KEY = ['A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G','H', 'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V', 'B', 'J', 'Z', 'X']
 
 BLOSUM62 = [[4, -1, -2, -2, 0, -1, -1, 0, -2, -1, -1, -1, -1, -2, -1, 1, 0, -3, -2, 0, -2, -1, -1, -1],
             [-1, 5, 0, -2, -3, 1, 0, -2, 0, -3, -2, 2, -1, -3, -2, -1, -1, -3, -2, -3, -1, -2, 0, -1],
@@ -59,28 +35,7 @@ BLOSUM62 = [[4, -1, -2, -2, 0, -1, -1, 0, -2, -1, -1, -1, -1, -2, -1, 1, 0, -3, 
             [-1, 0, 0, 1, -3, 4, 4, -2, 0, -3, -3, 1, -1, -3, -1, 0, -1, -2, -2, -2, 0, -3, 4, -1],
             [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]]
 
-PAM250_key = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y']
-
-PAM250_fake = [[2, -2, 0, 0, -3, 1, -1, -1, -1, -2, -1, 0, 1, 0, -2, 1, 1, 0, -6, -3],
-          [-2, 12, -5, -5, -4, -3, -3, -2, -5, -6, -5, -4, -3, -5, -4, 0, -2, -2, -8, 0],
-          [0, -5, 4, 3, -6, 1, 1, -2, 0, -4, -3, 2, -1, 2, -1, 0, 0, -2, -7, -4],
-          [0, -5, 3, 4, -5, 0, 1, -2, 0, -3, -2, 1, -1, 2, -1, 0, 0, -2, -7, -4],
-          [-3, -4, -6, -5, 9, -5, -2, 1, -5, 2, 0, -3, -5, -5, -4, -3, -3, -1, 0, 7],
-          [1, -3, 1, 0, -5, 5, -2, -3, -2, -4, -3, 0, 0, -1, -3, 1, 0, -1, -7, -5],
-          [-1, -3, 1, 1, -2, -2, 6, -2, 0, -2, -2, 2, 0, 3, 2, -1, -1, -2, -3, 0],
-          [-1, -2, -2, -2, 1, -3, -2, 5, -2, 2, 2, -2, -2, -2, -2, -1, 0, 4, -5, -1],
-          [-1, -5, 0, 0, -5, -2, 0, -2, 5, -3, 0, 1, -1, 1, 3, 0, 0, -2, -3, -4],
-          [-2, -6, -4, -3, 2, -4, -2, 2, -3, 6, 4, -3, -3, -2, -3, -3, -2, 2, -2, -1],
-          [-1, -5, -3, -2, 0, -3, -2, 2, 0, 4, 6, -2, -2, -1, 0, -2, -1, 2, -4, -2],
-          [0, -4, 2, 1, -3, 0, 2, -2, 1, -3, -2, 2, 0, 1, 0, 1, 0, -2, -4, -2],
-          [1, -3, -1, -1, -5, 0, 0, -2, -1, -3, -2, 0, 6, 0, 0, 1, 0, -1, -6, -5],
-          [0, -5, 2, 2, -5, -1, 3, -2, 1, -2, -1, 1, 0, 4, 1, -1, -1, -2, -5, -4],
-          [-2, -4, -1, -1, -4, -3, 2, -2, 3, -3, 0, 0, 0, 1, 6, 0, -1, -2, 2, -4],
-          [1, 0, 0, 0, -3, 1, -1, -1, 0, -3, -2, 1, 1, -1, 0, 2, 1, -1, -2, -3],
-          [1, -2, 0, 0, -3, 0, -1, 0, 0, -2, -1, 0, 0, -1, -1, 1, 3, 0, -5, -3],
-          [0, -2, -2, -2, -1, -1, -2, 4, -2, 2, 2, -2, -1, -2, -2, -1, 0, 4, -6, -2],
-          [-6, -8, -7, -7, 0, -7, -3, -5, -3, -2, -4, -4, -6, -5, 2, -2, -5, -6, 17, 0],
-          [-3, 0, -4, -4, 7, -5, 0, -1, -4, -1, -2, -2, -5, -4, -4, -3, -3, -2, 0, 10]]
+PAM250_KEY = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y']
 
 PAM250 = [[2, -2, 0, 0, -2, 0, 0, 1, -1, -1, -2, -1, -1, -3, 1, 1, 1, -6, -3, 0, 0, 0, 0],
           [-2, 6, 0, -1, -4, 1, -1, -3, 2, -2, -3, 3, 0, -4, 0, 0, -1, 2, -4, -2, -1, 0, -1],
@@ -107,29 +62,10 @@ PAM250 = [[2, -2, 0, 0, -2, 0, 0, 1, -1, -1, -2, -1, -1, -3, 1, 1, 1, -6, -3, 0,
           [0, -1, 0, -1, -3, -1, -1, -1, -1, -1, -1, -1, -1, -2, -1, 0, 0, -4, -2, -1, -1, -1, -1]]
 
 
+
 #import numpy as np
 #data = np.loadtxt('PAM250.txt', dtype=int).tolist()
 #print(data)
-
-
-
-def create_basic_alignment_graph(sequence1, sequence2):
-    graph = Graph()
-    for i in range(len(sequence1) + 1):
-        for j in range(len(sequence2) + 1):
-            graph.add_node(f'{i}-{j}')
-
-    for i in range(len(sequence1) + 1):
-        for j in range(len(sequence2) + 1):
-            if i < len(sequence1):
-                graph.add_edge(f'{i}-{j}', f'{i+1}-{j}', weight=0)
-            if j < len(sequence2):
-                graph.add_edge(f'{i}-{j}', f'{i}-{j+1}', weight=0)
-            if (i < len(sequence1)) and (j < len(sequence2)):
-                weight = 1 if sequence1[i] == sequence2[j] else 0
-                graph.add_edge(f'{i}-{j}', f'{i+1}-{j+1}', weight=weight)
-
-    return graph
 
 
 
@@ -168,15 +104,6 @@ def longest_path_to_alignment(sequence1, sequence2, longest_path):
 
 
 
-def id_to_tuple(ids):
-    ids_as_tuples = []
-    for id in ids:
-        indexes = id.split('-')
-        ids_as_tuples.append((int(indexes[-2]), int(indexes[-1])))
-    return ids_as_tuples
-
-
-
 def longest_path_to_alignment_affine_gap(sequence1, sequence2, longest_path):
     longest_path = id_to_tuple_affine_gap(longest_path)
     aligned_sequence1 = ''
@@ -212,6 +139,15 @@ def longest_path_to_alignment_affine_gap(sequence1, sequence2, longest_path):
 
 
 
+def id_to_tuple(ids):
+    ids_as_tuples = []
+    for id in ids:
+        indexes = id.split('-')
+        ids_as_tuples.append((int(indexes[-2]), int(indexes[-1])))
+    return ids_as_tuples
+
+
+
 def id_to_tuple_affine_gap(ids):
     ids_as_tuples = []
     for id in ids:
@@ -226,14 +162,30 @@ def id_to_tuple_affine_gap(ids):
 
 
 
-def basic_pairwise_alignment(sequence1, sequence2):
-    graph = create_basic_alignment_graph(sequence1, sequence2)
-    longest_path, score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
-    return longest_path_to_alignment(sequence1, sequence2, longest_path), score
+def create_basic_global_alignment_graph(sequence1, sequence2):
+    graph = Graph()
+    for i in range(len(sequence1) + 1):
+        for j in range(len(sequence2) + 1):
+            graph.add_node(f'{i}-{j}')
+
+    for i in range(len(sequence1) + 1):
+        for j in range(len(sequence2) + 1):
+            if i < len(sequence1):
+                graph.add_edge(f'{i}-{j}', f'{i+1}-{j}', weight=0)
+            if j < len(sequence2):
+                graph.add_edge(f'{i}-{j}', f'{i}-{j+1}', weight=0)
+            if (i < len(sequence1)) and (j < len(sequence2)):
+                weight = 1 if sequence1[i] == sequence2[j] else 0
+                graph.add_edge(f'{i}-{j}', f'{i+1}-{j+1}', weight=weight)
+
+    return graph
 
 
 
-def create_scored_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, indel_score):
+
+
+
+def create_scored_global_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, indel_score):
     graph = Graph()
     for i in range(len(sequence1) + 1):
         for j in range(len(sequence2) + 1):
@@ -257,21 +209,41 @@ def create_scored_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_
 
 
 
-def scored_pairwise_alignment(sequence1, sequence2, scoring_matrix, scoring_key, indel_score):
-    graph = create_scored_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, indel_score)
-    longest_path, score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
-    return longest_path_to_alignment(sequence1, sequence2, longest_path), score
 
 
 
-def scored_pairwise_local_alignment(sequence1, sequence2, scoring_matrix, scoring_key, indel_score):
-    graph = create_scored_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, indel_score)
-    longest_path, scores,  max_score = graph.longest_path_DAG_local_alignment('0-0', f'{len(sequence1)}-{len(sequence2)}')
-    return longest_path_to_alignment(sequence1, sequence2, longest_path), scores, max_score
+def create_scored_local_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, indel_score):
+    graph = Graph()
+    for i in range(len(sequence1) + 1):
+        for j in range(len(sequence2) + 1):
+            graph.add_node(f'{i}-{j}')
+
+    for i in range(len(sequence1) + 1):
+        for j in range(len(sequence2) + 1):
+            graph.add_edge('0-0', f'{i}-{j}', weight=0) # add 0 weight edge from 0-0 to every node
+            if i != len(sequence1)  and j != len(sequence2):
+                # add a 0 weight edge from every node to the sink node
+                graph.add_edge(f'{i}-{j}', f'{len(sequence1)}-{len(sequence2)}', weight=0)
+            if i < len(sequence1):
+                weight = indel_score
+                graph.add_edge(f'{i}-{j}', f'{i+1}-{j}', weight=weight) # deletion
+            if j < len(sequence2):
+                weight = indel_score
+                graph.add_edge(f'{i}-{j}', f'{i}-{j+1}', weight=weight) # insertion
+            if (i < len(sequence1)) and (j < len(sequence2)):
+                char1_index = scoring_key.index(sequence1[i])
+                char2_index = scoring_key.index(sequence2[j])
+                weight = scoring_matrix[char1_index][char2_index]
+                graph.add_edge(f'{i}-{j}', f'{i+1}-{j+1}', weight=weight) # match or mismatch
+    graph.remove_edge('0-0', '0-0', 0) # remove self cycle from 0-0 to itself
+    return graph
 
 
 
-def create_affine_gap_penalty_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost):
+
+
+
+def create_affine_gap_global_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost):
     graph = Graph()
     for i in range(len(sequence1) + 1):
         for j in range(len(sequence2) + 1):
@@ -285,8 +257,8 @@ def create_affine_gap_penalty_alignment_graph(sequence1, sequence2, scoring_matr
                 graph.add_edge(f'{i}-{j}', f'D-{i+1}-{j}', weight=initial_gap_cost) # initial deletion cost
                 graph.add_edge(f'D-{i}-{j}', f'D-{i+1}-{j}', weight=additional_gap_cost) # additional deletion cost
             if j < len(sequence2):
-                    graph.add_edge(f'{i}-{j}', f'I-{i}-{j+1}', weight=initial_gap_cost) # initial insertion cost
-                    graph.add_edge(f'I-{i}-{j}', f'I-{i}-{j+1}', weight=additional_gap_cost) # additional insertion cost
+                graph.add_edge(f'{i}-{j}', f'I-{i}-{j+1}', weight=initial_gap_cost) # initial insertion cost
+                graph.add_edge(f'I-{i}-{j}', f'I-{i}-{j+1}', weight=additional_gap_cost) # additional insertion cost
             if (i < len(sequence1)) and (j < len(sequence2)):
                 char1_index = scoring_key.index(sequence1[i])
                 char2_index = scoring_key.index(sequence2[j])
@@ -300,13 +272,82 @@ def create_affine_gap_penalty_alignment_graph(sequence1, sequence2, scoring_matr
 
 
 
-def scored_pairwise_alignment_affine_gap_penalty(sequence1, sequence2, scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost):
-    graph = create_affine_gap_penalty_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost)
+
+
+
+def create_affine_gap_local_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost):
+    graph = Graph()
+    for i in range(len(sequence1) + 1):
+        for j in range(len(sequence2) + 1):
+            graph.add_node(f'{i}-{j}')   # match/mismatch layer
+            graph.add_node(f'D-{i}-{j}') # deletion layer
+            graph.add_node(f'I-{i}-{j}') # insertion layer
+
+    for i in range(len(sequence1) + 1):
+        for j in range(len(sequence2) + 1):
+            # add 0 weight edge from 0-0 to every match/mismatch layer node
+            graph.add_edge('0-0', f'{i}-{j}', weight=0)
+            # add a 0 weight edge from every match/mismatch layer node to the sink node
+            graph.add_edge(f'{i}-{j}', f'{len(sequence1)}-{len(sequence2)}', weight=0)
+            if i < len(sequence1):
+                graph.add_edge(f'{i}-{j}', f'D-{i+1}-{j}', weight=initial_gap_cost) # initial deletion cost
+                graph.add_edge(f'D-{i}-{j}', f'D-{i+1}-{j}', weight=additional_gap_cost) # additional deletion cost
+            if j < len(sequence2):
+                    graph.add_edge(f'{i}-{j}', f'I-{i}-{j+1}', weight=initial_gap_cost) # initial insertion cost
+                    graph.add_edge(f'I-{i}-{j}', f'I-{i}-{j+1}', weight=additional_gap_cost) # additional insertion cost
+            if (i < len(sequence1)) and (j < len(sequence2)):
+                char1_index = scoring_key.index(sequence1[i])
+                char2_index = scoring_key.index(sequence2[j])
+                graph.add_edge(f'{i}-{j}', f'{i+1}-{j+1}', weight=scoring_matrix[char1_index][char2_index]) # match or mismatch
+            graph.add_edge(f'D-{i}-{j}', f'{i}-{j}', weight=0) # returning to match/mismatch layer costs nothing
+            graph.add_edge(f'I-{i}-{j}', f'{i}-{j}', weight=0) # returning to match/mismatch layer costs nothing
+
+    # make 0-0 a source node with no in edges
+    graph.remove_edge('D-0-0', '0-0', 0)
+    graph.remove_edge('I-0-0', '0-0', 0)
+
+    # remove self cycle from 0-0 to itself
+    graph.remove_edge('0-0', '0-0', 0)
+    # remove self cycle from sink node to itself
+    graph.remove_edge(f'{len(sequence1)}-{len(sequence2)}', f'{len(sequence1)}-{len(sequence2)}', 0)
+    return graph
+
+
+
+
+
+
+def basic_pairwise_global_alignment(sequence1, sequence2):
+    graph = create_basic_global_alignment_graph(sequence1, sequence2)
     longest_path, score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
-    #print(graph)
-    #return scores
     return longest_path_to_alignment(sequence1, sequence2, longest_path), score
 
+
+
+def scored_pairwise_global_alignment(sequence1, sequence2, scoring_matrix, scoring_key, indel_score):
+    graph = create_scored_global_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, indel_score)
+    longest_path, score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
+    return longest_path_to_alignment(sequence1, sequence2, longest_path), score
+
+
+
+def scored_pairwise_local_alignment(sequence1, sequence2, scoring_matrix, scoring_key, indel_score):
+    graph = create_scored_local_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, indel_score)
+    longest_path,  max_score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
+    return longest_path_to_alignment(sequence1, sequence2, longest_path), max_score
+
+
+
+def scored_pairwise_global_alignment_affine_gap_penalty(sequence1, sequence2, scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost):
+    graph = create_affine_gap_global_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost)
+    longest_path, score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
+    return longest_path_to_alignment(sequence1, sequence2, longest_path), score
+
+
+def scored_pairwise_local_alignment_affine_gap_penalty(sequence1, sequence2, scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost):
+    graph = create_affine_gap_local_alignment_graph(sequence1, sequence2, scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost)
+    longest_path, score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
+    return longest_path_to_alignment_affine_gap(sequence1, sequence2, longest_path), score
 
 '''seq1 = 'CAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTATATTTAATCTTGATGAGGAACGCAAATAACCATGGTTGCACGTGAGGATTTTCTTTAGTGAGTTGGGTTGCTTGGTAACTTATCCACTGCTATCTTAAGGGGGTTACTTCGGGATGAACGGCTTATGACAATCACAGTGAGGTCCGTCCCGGCCGATATGAGTTCTATGTTTTAACAGCGTCACCAGTGTCACGTACGGGGCCACCTCAGGCCCTGACCAGGGAATAGAGCGATTTGGGGACTTTCCCGGGTGATGTCTACCAGGAAGTTCGGTACCACTGACTTTGAATAATACTGTCAAAGGGGCTGCACCTTCCCGAGTTCGTCGTCATTACACAGCGCATATATTACACGTTAAGCCGTTTATCCGCATGTTATGCCAATTCGCGTCTTGCCAGGTGCCAACGAGCCTGATAAAGCAGTGGGTAGCGCCGGCACAGTATGTAGCAAGTTCCCCGCCGCGCGTTGAAAGCGTTACGTACAGGCGGCTAAGCGACGTTAAAATTGTCGCTTGCCTAACCCATCTCCCTGACACGGAACATAGCGAATAGTAGTCAACGGAGTTATGGTACAAAGCCTGAAAGCGACCTCAGACGAAGGGTCTGCCCGCAGGACGTGGGCTCTAATCCTCGGGGGCCTCGCCTACGTAGCACATCCCCAATAGCACTAAGAAGATGTGAACGAAACGCCGCTGTCGGATTCCAATTCTGAAATAGATAGTACCGGGTCCGAGGCGATGGAGGGTGGCGAAACCCCCATTTACGCATAGCGGTAACTTGGTCCCGGACTATTTATCAGTTGGTACCCTCGGCCCTGGTGGATGTGTTTTACTGGAATGATGTATAGACATCGCCTAC'
 seq2 = 'CGCCCTACCTTTCGTGCCTATCAAAGTCGGTAGGCGCATTCCGAGCTCCGACTAGCGAGAAAACCAGCACAATGAAGTGCGCCTCCATATGTTAGTATACGGGTTGCCTCAGCTTTGGGCGGGCCTAAGGGCGGGATGAACGGCTTATTCCTGTGCAGTAGGTCGGTCCCGCCGATATGAGTTCTGGAGGTATTTAACAGCAGGGGCACGTGCACTGGGCCGCCTCAGGGGCTCACCATGACCAGGACATCGAGCGGGATCTCAACTTTGGGGACTTTCCCGGGTGATGTCTGCCACTGATGTTCGGTACCAGCGACCATACTGTGAAAAGGGGCTGCAAACATTATCTTCCCGAGTTGTCATTACACAGCATATATTACGCCGAAACTACGTCTCCGCATGTTTAACTCGCGTTTTGCCAGAGCCTAGCTAGGTTATAAAGGCGGCACAGTTTGTTCTAAAACCCGCCCTCGCCGAAGCGTTACGTACAGCGGCAAAGCGACGTTGAAATTGTCGATTGCCTATGGTTGACGCGGAACATAGCGTGACATAGTAGTGATACTCCAAGCGTGAAAGTGACCTAGCGGGTCTGAGCAGGACGTTGGCTCGAGCACGTGCAAGTTAGGGTTGTTCATGCCTGGGGAAAATAGTTTACGATTATTCGGCCATGCGTTAGCGTGCTGCTGTCCAGGCGCAGGGGCTTTCGAAAGTTTACTCCGTGATTGCGATTACCCTGAAGCCAGAGCTACACTTCCACGGACCGAACGCCGAATATCCGGATCCTGCCTGGCTTTCCGGCTTCGGAACTGAGAGAGGATCCGAGAGATAGCTGGTAA'
@@ -323,7 +364,7 @@ print(seq2[490:])
 path1 = ['0-0', '512-604', '513-605', '514-606', '515-607', '516-608', '517-609', '518-610', '519-611', '520-612', '521-613', '522-614', '523-615', '524-616', '525-617', '526-618', '527-618', '528-619', '529-620', '530-621', '531-622', '532-623', '533-624', '534-625', '535-626', '536-627', '537-628', '538-629', '539-630', '540-631', '541-632', '542-633', '543-634', '544-635', '545-636', '546-637', '547-638', '548-639', '549-640', '550-641', '551-642', '552-643', '553-644', '554-645', '555-646', '556-647', '557-648', '558-649', '559-650', '560-651', '561-652']
 seq1 = 'CAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTATATTTAATCTTGATGAGGAACGCAAATAACCATGGTTGCACGTGAGGATTTTCTTTAGTGAGTTGGGTTGCTTGGTAACTTATCCACTGCTATCTTAAGGGGGTTACTTCGGGATGAACGGCTTATGACAATCACAGTGAGGTCCGTCCCGGCCGATATGAGTTCTATGTTTTAACAGCGTCACCAGTGTCACGTACGGGGCCACCTCAGGCCCTGACCAGGGAATAGAGCGATTTGGGGACTTTCCCGGGTGATGTCTACCAGGAAGTTCGGTACCACTGACTTTGAATAATACTGTCAAAGGGGCTGCACCTTCCCGAGTTCGTCGTCATTACACAGCGCATATATTACACGTTAAGCCGTTTATCCGCATGTTATGCCAATTCGCGTCTTGCCAGGTGCCAACGAGCCTGATAAAGCAGTGGGTAGCGCCGGCACAGTATGTAGCAAGTTCCCCGCCGCGCGTTGAAAGCGTTACGTACAGGCGGCTAAGCGACGTTAAAATTGTCGCTTGCCTAACCCATCTCCCTGACACGGAACATAGCGAATAGTAGTCAACGGAGTTATGGTACAAAGCCTGAAAGCGACCTCAGACGAAGGGTCTGCCCGCAGGACGTGGGCTCTAATCCTCGGGGGCCTCGCCTACGTAGCACATCCCCAATAGCACTAAGAAGATGTGAACGAAACGCCGCTGTCGGATTCCAATTCTGAAATAGATAGTACCGGGTCCGAGGCGATGGAGGGTGGCGAAACCCCCATTTACGCATAGCGGTAACTTGGTCCCGGACTATTTATCAGTTGGTACCCTCGGCCCTGGTGGATGTGTTTTACGATGCTATAGCGCGTATCGATTAGCTATGCTATCTATATTGCGCGCATATGCTAGGCTATGCTAGCTCTAGAGCAGCACACATATTCGATCGTATACGTACGTACGTACGTACGTCGTCGATGCTAGCTATCGATCGACTAGCTGGAATGATGTATAGACATCGCCTAC'
 seq2 = 'CGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGACGTAGCTATTATCTATCTCGAGCTACTATCGTACGAGCCGCGAGCTCTTCATCGTATATCGGCTATCGACTAGCAGCTAGCTAGCAGCCAGATCACTATTTCAGTTACGCATCGGTAGGCGCATTCCGAGCTCCGACTAGCGAGAAAACCAGCACAATGAAGTGCGCCTCCATATGTTAGTATACGGGTTGCCTCAGCTTTGGGCGGGCCTAAGGGCGGGATGAACGGCTTATTCCTGTGCAGTAGGTCGGTCCCGCCGATATGAGTTCTGGAGGTATTTAACAGCAGGGGCACGTGCACTGGGCCGCCTCAGGGGCTCACCATGACCAGGACATCGAGCGGGATCTCAACTTTGGGGACTTTCCCGGGTGATGTCTGCCACTGATGTTCGGTACCAGCGACCATACTGTGAAAAGGGGCTGCAAACATTATCTTCCCGAGTTGTCATTACACAGCATATATTACGCCGAAACTACGTCTCCGCATGTTTAACTCGCGTTTTGCCAGAGCCTAGCTAGGTTATAAAGGCGGCACAGTTTGTTCTAAAACCCGCCCTCGCCGAAGCGTTACGTACAGCGGCAAAGCGACGTTGAAATTGTCGATTGCCTATGGTTGACGCGGAACATAGCGTGACATAGTAGTGATACTCCAAGCGTGAAAGTGACCTAGCGGGTCTGAGCAGGACGTTGGCTCGAGCACGTGCAAGTTAGGGTTGTTCATGCCTGGGGAAAATAGTTTACGATTATTCGGCCATGCGTTAGCGTGCTGCTGTCCAGGCGCAGGGGCTTTCGAAAGTTTACTCCGTGATTGCGATTACCCTGAAGCCAGAGCTACACTTCCACGGACCGAACGCCGAATATCCGGATCCTGCCTGGCTTTCCGGCTTCGGAACTGAGAGAGGATCCGAGAGATAGCTGGTAA'
-alignment3, max_score1 = scored_pairwise_alignment_affine_gap_penalty(seq1, seq2, dna_matrix, dna_list, -5, -2)
+alignment3, max_score1 = scored_pairwise_local_alignment_affine_gap_penalty(seq1, seq2, DNA_MATRIX, DNA_KEY, -10, -5)
 print(max_score1)
 print(alignment3[0])
 print(alignment3[1])
