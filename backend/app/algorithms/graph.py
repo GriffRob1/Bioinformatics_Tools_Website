@@ -13,6 +13,9 @@ class Edge:
     def __repr__(self):
         return f"({self.source.id} -> {self.target.id}, {self.weight})"
 
+    def __eq__(self, other):
+        return self.target == other.target and self.source == other.source and self.weight == other.weight
+
 
 
 class Node:
@@ -27,6 +30,9 @@ class Node:
 
     def __repr__(self):
         return f"id: {self.id}; out edges: {[repr(edge) for edge in self.out_edges]}\n"
+
+    def __eq__(self, other):
+        return self.id == other.id
 
 
 
@@ -49,6 +55,15 @@ class Graph:
         edge = Edge(source, target, weight)
         source.out_edges.append(edge)
         target.in_edges.append(edge)
+
+    def remove_edge(self, source_id, target_id, weight=1):
+        if (source_id not in self.nodes) or (target_id not in self.nodes):
+            raise Exception('at least one node does not exist in graph')
+        source = self.nodes[source_id]
+        target = self.nodes[target_id]
+        edge = Edge(source, target, weight)
+        source.out_edges.remove(edge)
+        target.in_edges.remove(edge)
 
     def get_node(self, id):
         return self.nodes[id]
@@ -92,12 +107,9 @@ class Graph:
         sorted_graph = self.topological_ordering()
         sorted_graph = sorted_graph[1:] # remove the source node
         for node in sorted_graph:
-            max_score_tuple = (float('-inf'), None)
-            for edge in node.in_edges:
-                score = scores[edge.source.id][0] + edge.weight
-                if score > max_score_tuple[0]:
-                    max_score_tuple = (score, edge.source.id)
-            scores[node.id] = max_score_tuple
+            if len(node.in_edges) != 0:
+                scores[node.id] = max([(scores[edge.source.id][0] + edge.weight, edge.source.id) for edge in node.in_edges])
+
 
         # backtracking
         longest_path = []
@@ -149,12 +161,12 @@ class Graph:
         seq2_length = int(lengths[1])
         scores['0-0'] = (0, None)
         for i in range(seq1_length + 1):
-            scores[f'I-{i}-{0}'] = (0, None)
+            scores[f'I-{i}-{0}'] = (float('-inf'), None)
         for j in range(seq2_length + 1):
-            scores[f'D-{0}-{j}'] = (0, None)
+            scores[f'D-{0}-{j}'] = (float('-inf'), None)
 
         sorted_graph = self.topological_ordering()
-        sorted_graph = sorted_graph[3:]
+        sorted_graph = sorted_graph[1:]
         for node in sorted_graph:
             if len(node.in_edges) != 0:
                 scores[node.id] = max([(scores[edge.source.id][0] + edge.weight, edge.source.id) for edge in node.in_edges])
