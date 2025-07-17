@@ -66,6 +66,8 @@
     width: 100%;
     white-space: pre-line;
     text-wrap: wrap;
+    font-family: monospace;
+    font-size: 1.1em;
 }
 
 .back-to-all-tools-button {

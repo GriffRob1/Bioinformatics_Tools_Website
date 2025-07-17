@@ -1,5 +1,5 @@
-from graph import Graph
-from motif_finder import hamming_distance
+from .graph import Graph
+from .motif_finder import hamming_distance
 import numpy as np
 import random
 
@@ -63,7 +63,11 @@ PAM250 = [[2, -2, 0, 0, -2, 0, 0, 1, -1, -1, -2, -1, -1, -3, 1, 1, 1, -6, -3, 0,
           [0, 0, 1, 3, -5, 3, 3, 0, 2, -2, -3, 0, -2, -5, 0, 0, -1, -6, -4, -2, 2, 3, -1],
           [0, -1, 0, -1, -3, -1, -1, -1, -1, -1, -1, -1, -1, -2, -1, 0, 0, -4, -2, -1, -1, -1, -1]]
 
-
+matrix_to_key = {
+    'DNA_MATRIX': 'DNA_KEY',
+    'BLOSUM62': 'BLOSUM62_KEY',
+    'PAM250': 'PAM205_KEY'
+}
 
 #import numpy as np
 #data = np.loadtxt('PAM250.txt', dtype=int).tolist()
@@ -438,59 +442,103 @@ def basic_pairwise_global_alignment(sequence1, sequence2):
 
 
 
-def scored_pairwise_global_alignment(scoring_matrix, scoring_key, indel_score, sequence1, sequence2):
+def scored_pairwise_global_alignment(scoring_matrix, indel_score, sequence1, sequence2):
+    scoring_key = matrix_to_key[scoring_matrix]
+    scoring_matrix = globals()[scoring_matrix]
+    scoring_key = globals()[scoring_key]
+    indel_score = int(indel_score)
     graph = create_scored_global_alignment_graph(scoring_matrix, scoring_key, indel_score, sequence1, sequence2)
     longest_path, score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
-    return longest_path_to_alignment(longest_path, sequence1, sequence2), score
+    alignment = longest_path_to_alignment(longest_path, sequence1, sequence2)
+    return score, alignment[0], alignment[1]
 
 
 
-def scored_pairwise_global_alignment_affine_gap_penalty(scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost, sequence1, sequence2):
+def scored_pairwise_global_alignment_affine_gap_penalty(scoring_matrix, initial_gap_cost, additional_gap_cost, sequence1, sequence2):
+    scoring_key = matrix_to_key[scoring_matrix]
+    scoring_matrix = globals()[scoring_matrix]
+    scoring_key = globals()[scoring_key]
+    initial_gap_cost = int(initial_gap_cost)
+    additional_gap_cost = int(additional_gap_cost)
     graph = create_affine_gap_global_alignment_graph(scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost, sequence1, sequence2)
     longest_path, score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
-    return longest_path_to_alignment(longest_path, sequence1, sequence2), score
+    alignment = longest_path_to_alignment(longest_path, sequence1, sequence2)
+    return score, alignment[0], alignment[1]
 
 
 
-def scored_pairwise_local_alignment(scoring_matrix, scoring_key, indel_score, sequence1, sequence2):
+def scored_pairwise_local_alignment(scoring_matrix, indel_score, sequence1, sequence2):
+    scoring_key = matrix_to_key[scoring_matrix]
+    scoring_matrix = globals()[scoring_matrix]
+    scoring_key = globals()[scoring_key]
+    indel_score = int(indel_score)
     graph = create_scored_local_alignment_graph(scoring_matrix, scoring_key, indel_score, sequence1, sequence2)
-    longest_path,  max_score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
-    return longest_path_to_alignment(longest_path, sequence1, sequence2), max_score
+    longest_path,  score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
+    alignment = longest_path_to_alignment(longest_path, sequence1, sequence2)
+    return score, alignment[0], alignment[1]
 
 
 
-def scored_pairwise_local_alignment_affine_gap_penalty(scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost, sequence1, sequence2):
+def scored_pairwise_local_alignment_affine_gap_penalty(scoring_matrix, initial_gap_cost, additional_gap_cost, sequence1, sequence2):
+    scoring_key = matrix_to_key[scoring_matrix]
+    scoring_matrix = globals()[scoring_matrix]
+    scoring_key = globals()[scoring_key]
+    initial_gap_cost = int(initial_gap_cost)
+    additional_gap_cost = int(additional_gap_cost)
     graph = create_affine_gap_local_alignment_graph(scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost, sequence1, sequence2)
     longest_path, score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
-    return longest_path_to_alignment(longest_path, sequence1, sequence2), score
+    alignment = longest_path_to_alignment(longest_path, sequence1, sequence2)
+    return score, alignment[0], alignment[1]
 
 
 
-def scored_pairwise_fitting_alignment(scoring_matrix, scoring_key, indel_score, container_sequence, fitting_sequence):
+def scored_pairwise_fitting_alignment(scoring_matrix, indel_score, container_sequence, fitting_sequence):
+    scoring_key = matrix_to_key[scoring_matrix]
+    scoring_matrix = globals()[scoring_matrix]
+    scoring_key = globals()[scoring_key]
+    indel_score = int(indel_score)
     graph = create_scored_fitting_alignment_graph(scoring_matrix, scoring_key, indel_score, container_sequence, fitting_sequence)
     longest_path, score = graph.longest_path_DAG('0-0', f'{len(container_sequence)}-{len(fitting_sequence)}')
-    return longest_path_to_alignment(longest_path, container_sequence, fitting_sequence), score
+    alignment = longest_path_to_alignment(longest_path, sequence1, sequence2)
+    return score, alignment[0], alignment[1]
 
 
 
-def scored_pairwise_fitting_alignment_affine_gap_penalty(scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost, container_sequence, fitting_sequence):
+def scored_pairwise_fitting_alignment_affine_gap_penalty(scoring_matrix, initial_gap_cost, additional_gap_cost, container_sequence, fitting_sequence):
+    scoring_key = matrix_to_key[scoring_matrix]
+    scoring_matrix = globals()[scoring_matrix]
+    scoring_key = globals()[scoring_key]
+    initial_gap_cost = int(initial_gap_cost)
+    additional_gap_cost = int(additional_gap_cost)
     graph = create_affine_gap_fitting_alignment_graph(scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost, container_sequence, fitting_sequence)
     longest_path, score = graph.longest_path_DAG('0-0', f'{len(container_sequence)}-{len(fitting_sequence)}')
-    return longest_path_to_alignment(longest_path, container_sequence, fitting_sequence), score
+    alignment = longest_path_to_alignment(longest_path, sequence1, sequence2)
+    return score, alignment[0], alignment[1]
 
 
 
-def scored_pairwise_overlap_alignment(scoring_matrix, scoring_key, indel_score, sequence1, sequence2):
+def scored_pairwise_overlap_alignment(scoring_matrix, indel_score, sequence1, sequence2):
+    scoring_key = matrix_to_key[scoring_matrix]
+    scoring_matrix = globals()[scoring_matrix]
+    scoring_key = globals()[scoring_key]
+    indel_score = int(indel_score)
     graph = create_scored_overlap_alignment_graph(scoring_matrix, scoring_key, indel_score, sequence1, sequence2)
     longest_path, score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
-    return longest_path_to_alignment(longest_path, sequence1, sequence2), score
+    alignment = longest_path_to_alignment(longest_path, sequence1, sequence2)
+    return score, alignment[0], alignment[1]
 
 
 
-def scored_pairwise_overlap_alignment_affine_gap_penalty(scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost, sequence1, sequence2):
+def scored_pairwise_overlap_alignment_affine_gap_penalty(scoring_matrix, initial_gap_cost, additional_gap_cost, sequence1, sequence2):
+    scoring_key = matrix_to_key[scoring_matrix]
+    scoring_matrix = globals()[scoring_matrix]
+    scoring_key = globals()[scoring_key]
+    initial_gap_cost = int(initial_gap_cost)
+    additional_gap_cost = int(additional_gap_cost)
     graph = create_affine_gap_overlap_alignment_graph(scoring_matrix, scoring_key, initial_gap_cost, additional_gap_cost, sequence1, sequence2)
     longest_path, score = graph.longest_path_DAG('0-0', f'{len(sequence1)}-{len(sequence2)}')
-    return longest_path_to_alignment(longest_path, sequence1, sequence2), score
+    alignment = longest_path_to_alignment(longest_path, sequence1, sequence2)
+    return score, alignment[0], alignment[1]
 
 
 
@@ -534,11 +582,13 @@ def edit_distance(sequence1, sequence2):
     sequence2_length = len(sequence2)
     distance_array = np.zeros((sequence1_length + 1, sequence2_length + 1))
 
+    # initialize first row and column
     for i in range(sequence1_length + 1):
         distance_array[i][0] = i
     for j in range(sequence2_length + 1):
         distance_array[0][j] = j
 
+    # dynamic programming algorithm
     for i in range(1, sequence1_length + 1):
         for j in range(1, sequence2_length + 1):
             if sequence1[i - 1] == sequence2[j - 1]:
@@ -553,10 +603,17 @@ def edit_distance(sequence1, sequence2):
 
 
 
-def greedy_multiple_alignment(scoring_matrix, scoring_key, indel_score, sequences):
+def greedy_multiple_alignment(scoring_matrix, indel_score, sequences):
+    scoring_key = matrix_to_key[scoring_matrix]
+    scorint_matrix_string = scoring_matrix
+    scoring_matrix = globals()[scoring_matrix]
+    scoring_key = globals()[scoring_key]
+    indel_score = int(indel_score)
+
     sequences = sequences.copy()
     aligned_sequences = []
 
+    # find closest pair of sequences by edit distance
     least_distance = edit_distance(sequences[0], sequences[1])
     closest_pair = (sequences[0], sequences[1])
     for i in range(len(sequences) - 1):
@@ -566,13 +623,15 @@ def greedy_multiple_alignment(scoring_matrix, scoring_key, indel_score, sequence
                 least_distance = distance
                 closest_pair = (sequences[i], sequences[j])
 
-    pairwise_alignment, score = scored_pairwise_global_alignment(scoring_matrix, scoring_key, indel_score, closest_pair[0], closest_pair[1])
+    # compute alignment of closest pair
+    pairwise_alignment, score = scored_pairwise_global_alignment(scorint_matrix_string, indel_score, closest_pair[0], closest_pair[1])
     aligned_sequences.append(pairwise_alignment[0])
     aligned_sequences.append(pairwise_alignment[1])
     sequences.remove(closest_pair[0])
     sequences.remove(closest_pair[1])
     consensus = consensus_sequence(aligned_sequences, scoring_key)
 
+    # repeatedly finds the closest sequence to the consensus string then aligns it with the consensus string
     while len(sequences) > 0:
         least_distance = edit_distance(consensus, sequences[0])
         closest_sequence = sequences[0]
@@ -582,7 +641,7 @@ def greedy_multiple_alignment(scoring_matrix, scoring_key, indel_score, sequence
                 least_distance = distance
                 closest_sequence = sequences[j]
 
-        pairwise_alignment, score = scored_pairwise_global_alignment(scoring_matrix, scoring_key, indel_score, consensus, closest_sequence)
+        pairwise_alignment, score = scored_pairwise_global_alignment(scorint_matrix_string, indel_score, consensus, closest_sequence)
         aligned_sequences.append(pairwise_alignment[1])
         sequences.remove(closest_sequence)
         consensus = consensus_sequence(aligned_sequences, scoring_key)
@@ -598,8 +657,8 @@ def greedy_multiple_alignment(scoring_matrix, scoring_key, indel_score, sequence
 
 
 
-seq1 = 'CAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTATATTTAATCTTGATGAGGAACGCAAATAACCATGGTTGCACGTGAGGATTTTCTTTAGTGAGTTGGGTTGCTTGGTAACTTATCCACTGCTATCTTAAGGGGGTTACTTCGGGATGAACGGCTTATGACAATCACAGTGAGGTCCGTCCCGGCCGATATGAGTTCTATGTTTTAACAGCGTCACCAGTGTCACGTACGGGGCCACCTCAGGCCCTGACCAGGGAATAGAGCGATTTGGGGACTTTCCCGGGTGATGTCTACCAGGAAGTTCGGTACCACTGACTTTGAATAATACTGTCAAAGGGGCTGCACCTTCCCGAGTTCGTCGTCATTACACAGCGCATATATTACACGTTAAGCCGTTTATCCGCATGTTATGCCAATTCGCGTCTTGCCAGGTGCCAACGAGCCTGATAAAGCAGTGGGTAGCGCCGGCACAGTATGTAGCAAGTTCCCCGCCGCGCGTTGAAAGCGTTACGTACAGGCGGCTAAGCGACGTTAAAATTGTCGCTTGCCTAACCCATCTCCCTGACACGGAACATAGCGAATAGTAGTCAACGGAGTTATGGTACAAAGCCTGAAAGCGACCTCAGACGAAGGGTCTGCCCGCAGGACGTGGGCTCTAATCCTCGGGGGCCTCGCCTACGTAGCACATCCCCAATAGCACTAAGAAGATGTGAACGAAACGCCGCTGTCGGATTCCAATTCTGAAATAGATAGTACCGGGTCCGAGGCGATGGAGGGTGGCGAAACCCCCATTTACGCATAGCGGTAACTTGGTCCCGGACTATTTATCAGTTGGTACCCTCGGCCCTGGTGGATGTGTTTTACGATGCTATAGCGCGTATCGATTAGCTATGCTATCTATATTGCGCGCATATGCTAGGCTATGCTAGCTCTAGAGCAGCACACATATTCGATCGTATACGTACGTACGTACGTACGTCGTCGATGCTAGCTATCGATCGACTAGCTGGAATGATGTATAGACATCGCCTAC'
-seq2 = 'CGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGACGTAGCTATTATCTATCTCGAGCTACTATCGTACGAGCCGCGAGCTCTTCATCGTATATCGGCTATCGACTAGCAGCTAGCTAGCAGCCAGATCACTATTTCAGTTACGCATCGGTAGGCGCATTCCGAGCTCCGACTAGCGAGAAAACCAGCACAATGAAGTGCGCCTCCATATGTTAGTATACGGGTTGCCTCAGCTTTGGGCGGGCCTAAGGGCGGGATGAACGGCTTATTCCTGTGCAGTAGGTCGGTCCCGCCGATATGAGTTCTGGAGGTATTTAACAGCAGGGGCACGTGCACTGGGCCGCCTCAGGGGCTCACCATGACCAGGACATCGAGCGGGATCTCAACTTTGGGGACTTTCCCGGGTGATGTCTGCCACTGATGTTCGGTACCAGCGACCATACTGTGAAAAGGGGCTGCAAACATTATCTTCCCGAGTTGTCATTACACAGCATATATTACGCCGAAACTACGTCTCCGCATGTTTAACTCGCGTTTTGCCAGAGCCTAGCTAGGTTATAAAGGCGGCACAGTTTGTTCTAAAACCCGCCCTCGCCGAAGCGTTACGTACAGCGGCAAAGCGACGTTGAAATTGTCGATTGCCTATGGTTGACGCGGAACATAGCGTGACATAGTAGTGATACTCCAAGCGTGAAAGTGACCTAGCGGGTCTGAGCAGGACGTTGGCTCGAGCACGTGCAAGTTAGGGTTGTTCATGCCTGGGGAAAATAGTTTACGATTATTCGGCCATGCGTTAGCGTGCTGCTGTCCAGGCGCAGGGGCTTTCGAAAGTTTACTCCGTGATTGCGATTACCCTGAAGCCAGAGCTACACTTCCACGGACCGAACGCCGAATATCCGGATCCTGCCTGGCTTTCCGGCTTCGGAACTGAGAGAGGATCCGAGAGATAGCTGGTAA'
+seq1 = 'CAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTAT ATTTAATCTTGATGAGGAACGCAAATAACCATGGTTGCACGTGAGGATTTTCTTTAGTGAGTTGGGTTGCTTGGTAACTTATCCACTGCTATCTTAAGGGGGTTACTTCGGGATGAACGGCTTATGACAATCACAGTGAGGTCCGTCCCGGCCGATATGAGTTCTATGTTTTAACAGCGTCACCAGTGTCACGTACGGGGCCACCTCAGGCCCTGACCAGGGAATAGAGCGATTTGGGGACTTTCCCGGGTGATGTCTACCAGGAAGTTCGGTACCACTGACTTTGAATAATACTGTCAAAGGGGCTGCACCTTCCCGAGTTCGTCGTCATTACACAGCGCATATATTACACGTTAAGCCGTTTATCCGCATGTTATGCCAATTCGCGTCTTGCCAGGTGCCAACGAGCCTGATAAAGCAGTGGGTAGCGCCGGCACAGTATGTAGCAAGTTCCCCGCCGCGCGTTGAAAGCGTTACGTACAGGCGGCTAAGCGACGTTAAAATTGTCGCTTGCCTAACCCATCTCCCTGACACGGAACATAGCGAATAGTAGTCAACGGAGTTATGGTACAAAGCCTGAAAGCGACCTCAGACGAAGGGTCTGCCCGCAGGACGTGGGCTCTAATCCTCGGGGGCCTCGCCTACGTAGCACATCCCCAATAGCACTAAGAAGATGTGAACGAAACGCCGCTGTCGGATTCCAATTCTGAAATAGATAGTACCGGGTCCGAGGCGATGGAGGGTGGCGAAACCCCCATTTACGCATAGCGGTAACTTGGTCCCGGACTATTTATCAGTTGGTACCCTCGGCCCTGGTGGATGTGTTTTACGATGCTATAGCGCGTATCGATTAGCTATGCTATCTATATTGCGCGCATATGCTAGGCTATGCTAGCTCTAGAGCAGCACACATATTCGATCGTATACGTACGTACGTACGTACGTCGTCGATGCTAGCTATCGATCGACTAGCTGGAATGATGTATAGACATCGCCTAC'
+seq2 = 'CGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGAC GTAGCTATTATCTATCTCGAGCTACTATCGTACGAGCCGCGAGCTCTTCATCGTATATCGGCTATCGACTAGCAGCTAGCTAGCAGCCAGATCACTATTTCAGTTACGCATCGGTAGGCGCATTCCGAGCTCCGACTAGCGAGAAAACCAGCACAATGAAGTGCGCCTCCATATGTTAGTATACGGGTTGCCTCAGCTTTGGGCGGGCCTAAGGGCGGGATGAACGGCTTATTCCTGTGCAGTAGGTCGGTCCCGCCGATATGAGTTCTGGAGGTATTTAACAGCAGGGGCACGTGCACTGGGCCGCCTCAGGGGCTCACCATGACCAGGACATCGAGCGGGATCTCAACTTTGGGGACTTTCCCGGGTGATGTCTGCCACTGATGTTCGGTACCAGCGACCATACTGTGAAAAGGGGCTGCAAACATTATCTTCCCGAGTTGTCATTACACAGCATATATTACGCCGAAACTACGTCTCCGCATGTTTAACTCGCGTTTTGCCAGAGCCTAGCTAGGTTATAAAGGCGGCACAGTTTGTTCTAAAACCCGCCCTCGCCGAAGCGTTACGTACAGCGGCAAAGCGACGTTGAAATTGTCGATTGCCTATGGTTGACGCGGAACATAGCGTGACATAGTAGTGATACTCCAAGCGTGAAAGTGACCTAGCGGGTCTGAGCAGGACGTTGGCTCGAGCACGTGCAAGTTAGGGTTGTTCATGCCTGGGGAAAATAGTTTACGATTATTCGGCCATGCGTTAGCGTGCTGCTGTCCAGGCGCAGGGGCTTTCGAAAGTTTACTCCGTGATTGCGATTACCCTGAAGCCAGAGCTACACTTCCACGGACCGAACGCCGAATATCCGGATCCTGCCTGGCTTTCCGGCTTCGGAACTGAGAGAGGATCCGAGAGATAGCTGGTAA'
 
 '''alignment3, max_score1 = scored_pairwise_global_alignment_affine_gap_penalty(DNA_MATRIX, DNA_KEY, -10, -5, seq1, seq2)
 print(max_score1)
@@ -636,12 +695,13 @@ print(matrix)'''
 
 
 
-
-sequences2 = []
+'''sequences2 = []
 with open('sequences.txt', 'r') as sequences_txt:
     for line in sequences_txt:
         sequences2.append(line[:-1].upper())
 
-multiple_alignment1 = greedy_multiple_alignment(BLOSUM62, BLOSUM62_KEY, -5, sequences2[0:10])
+multiple_alignment1 = greedy_multiple_alignment('BLOSUM62', -5, sequences2[0:10])
 for alignment in multiple_alignment1:
-    print(alignment)
+    print(alignment[:147])
+
+'''

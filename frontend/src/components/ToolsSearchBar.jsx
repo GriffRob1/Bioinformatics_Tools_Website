@@ -35,6 +35,7 @@ export default function ToolsSearchBar({inputName,
                         <option value={'Motif Finding'}>Motif Finding</option>
                         <option value={'Genome Assembly'}>Genome Assembly</option>
                         <option value={'Cyclopeptide Sequencing'}>Cyclopeptide Sequencing</option>
+                        <option value={'Sequence Alignment'}>Sequence Alignment</option>
                     </select>
                 </label>
 

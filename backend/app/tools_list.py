@@ -467,4 +467,145 @@ tools_list = [
         'inputExample': '6\n100\n0 71 87 87 101 115 158 163 172 202 216 250 250 259 287 303 321 337 365 374 374 408 422 452 461 466 509 523 537 537 553 624',
         'listArgumentIndex': 2
     },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {
+        'popularity': 0,
+        'URL': 'scored_pairwise_global_alignment',
+        'imagePath': "/images/Sequence Alignment Icon.png",
+        'toolTitle': 'Pairwise Global Alignment',
+        'textDescription': 'Align two nucleotide or protein sequences',
+        'dateAdded': "2025-07-16T07:52:00",
+        'category': "Sequence Alignment",
+        'longDescription': 'This tool performs pairwise alignment using a dynamic programming algorithm. It can be used for nucleotide or protein sequences, depending on the scoring matrix chosen.',
+        'inputFormat': 'scoring matrix: the scoring matrix used for the alignment. The options for matrices are BLOSUM62 and PAM250 for protein sequences, and DNA_MATRIX for dna sequences. DNA_MATRIX is a simple scoring matrix with +1 for matches and -1 for mismatches.\nindel score: the score for insertions or deletions. Usually a negative number.\nsequences: two sequences, each on their own line, to align.',
+        'outputFormat': 'score: the score of the alignment. A higher score means a better alignment.\nalignment: the aligned sequences',
+        'inputExample': 'DNA_MATRIX\n-2\nCAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTAT\nCGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGAC',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'scored_pairwise_local_alignment',
+        'imagePath': "/images/Sequence Alignment Icon.png",
+        'toolTitle': 'Pairwise Global Alignment',
+        'textDescription': 'Align two nucleotide or protein sequences',
+        'dateAdded': "2025-07-16T07:52:00",
+        'category': "Sequence Alignment",
+        'longDescription': 'This tool performs pairwise alignment using a dynamic programming algorithm. It can be used for nucleotide or protein sequences, depending on the scoring matrix chosen.',
+        'inputFormat': 'scoring matrix: the scoring matrix used for the alignment. The options for matrices are BLOSUM62 and PAM250 for protein sequences, and DNA_MATRIX for dna sequences. DNA_MATRIX is a simple scoring matrix with +1 for matches and -1 for mismatches.\nindel score: the score for insertions or deletions. Usually a negative number.\nsequences: two sequences, each on their own line, to align.',
+        'outputFormat': 'score: the score of the alignment. A higher score means a better alignment.\nalignment: the aligned sequences',
+        'inputExample': 'DNA_MATRIX\n-2\nCAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTAT\nCGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGAC',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'scored_pairwise_fitting_alignment',
+        'imagePath': "/images/Sequence Alignment Icon.png",
+        'toolTitle': 'Pairwise Global Alignment',
+        'textDescription': 'Align two nucleotide or protein sequences',
+        'dateAdded': "2025-07-16T07:52:00",
+        'category': "Sequence Alignment",
+        'longDescription': 'This tool performs pairwise alignment using a dynamic programming algorithm. It can be used for nucleotide or protein sequences, depending on the scoring matrix chosen.',
+        'inputFormat': 'scoring matrix: the scoring matrix used for the alignment. The options for matrices are BLOSUM62 and PAM250 for protein sequences, and DNA_MATRIX for dna sequences. DNA_MATRIX is a simple scoring matrix with +1 for matches and -1 for mismatches.\nindel score: the score for insertions or deletions. Usually a negative number.\nsequences: two sequences, each on their own line, to align.',
+        'outputFormat': 'score: the score of the alignment. A higher score means a better alignment.\nalignment: the aligned sequences',
+        'inputExample': 'DNA_MATRIX\n-2\nCAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTAT\nCGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGAC',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'scored_pairwise_overlap_alignment',
+        'imagePath': "/images/Sequence Alignment Icon.png",
+        'toolTitle': 'Pairwise Global Alignment',
+        'textDescription': 'Align two nucleotide or protein sequences',
+        'dateAdded': "2025-07-16T07:52:00",
+        'category': "Sequence Alignment",
+        'longDescription': 'This tool performs pairwise alignment using a dynamic programming algorithm. It can be used for nucleotide or protein sequences, depending on the scoring matrix chosen.',
+        'inputFormat': 'scoring matrix: the scoring matrix used for the alignment. The options for matrices are BLOSUM62 and PAM250 for protein sequences, and DNA_MATRIX for dna sequences. DNA_MATRIX is a simple scoring matrix with +1 for matches and -1 for mismatches.\nindel score: the score for insertions or deletions. Usually a negative number.\nsequences: two sequences, each on their own line, to align.',
+        'outputFormat': 'score: the score of the alignment. A higher score means a better alignment.\nalignment: the aligned sequences',
+        'inputExample': 'DNA_MATRIX\n-2\nCAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTAT\nCGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGAC',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'scored_pairwise_global_alignment_affine_gap_penalty',
+        'imagePath': "/images/Sequence Alignment Icon.png",
+        'toolTitle': 'Pairwise Global Alignment',
+        'textDescription': 'Align two nucleotide or protein sequences',
+        'dateAdded': "2025-07-16T07:52:00",
+        'category': "Sequence Alignment",
+        'longDescription': 'This tool performs pairwise alignment using a dynamic programming algorithm. It can be used for nucleotide or protein sequences, depending on the scoring matrix chosen.',
+        'inputFormat': 'scoring matrix: the scoring matrix used for the alignment. The options for matrices are BLOSUM62 and PAM250 for protein sequences, and DNA_MATRIX for dna sequences. DNA_MATRIX is a simple scoring matrix with +1 for matches and -1 for mismatches.\nindel score: the score for insertions or deletions. Usually a negative number.\nsequences: two sequences, each on their own line, to align.',
+        'outputFormat': 'score: the score of the alignment. A higher score means a better alignment.\nalignment: the aligned sequences',
+        'inputExample': 'DNA_MATRIX\n-2\nCAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTAT\nCGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGAC',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'scored_pairwise_local_alignment_affine_gap_penalty',
+        'imagePath': "/images/Sequence Alignment Icon.png",
+        'toolTitle': 'Pairwise Global Alignment',
+        'textDescription': 'Align two nucleotide or protein sequences',
+        'dateAdded': "2025-07-16T07:52:00",
+        'category': "Sequence Alignment",
+        'longDescription': 'This tool performs pairwise alignment using a dynamic programming algorithm. It can be used for nucleotide or protein sequences, depending on the scoring matrix chosen.',
+        'inputFormat': 'scoring matrix: the scoring matrix used for the alignment. The options for matrices are BLOSUM62 and PAM250 for protein sequences, and DNA_MATRIX for dna sequences. DNA_MATRIX is a simple scoring matrix with +1 for matches and -1 for mismatches.\nindel score: the score for insertions or deletions. Usually a negative number.\nsequences: two sequences, each on their own line, to align.',
+        'outputFormat': 'score: the score of the alignment. A higher score means a better alignment.\nalignment: the aligned sequences',
+        'inputExample': 'DNA_MATRIX\n-2\nCAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTAT\nCGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGAC',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'scored_pairwise_fitting_alignment_affine_gap_penalty',
+        'imagePath': "/images/Sequence Alignment Icon.png",
+        'toolTitle': 'Pairwise Global Alignment',
+        'textDescription': 'Align two nucleotide or protein sequences',
+        'dateAdded': "2025-07-16T07:52:00",
+        'category': "Sequence Alignment",
+        'longDescription': 'This tool performs pairwise alignment using a dynamic programming algorithm. It can be used for nucleotide or protein sequences, depending on the scoring matrix chosen.',
+        'inputFormat': 'scoring matrix: the scoring matrix used for the alignment. The options for matrices are BLOSUM62 and PAM250 for protein sequences, and DNA_MATRIX for dna sequences. DNA_MATRIX is a simple scoring matrix with +1 for matches and -1 for mismatches.\nindel score: the score for insertions or deletions. Usually a negative number.\nsequences: two sequences, each on their own line, to align.',
+        'outputFormat': 'score: the score of the alignment. A higher score means a better alignment.\nalignment: the aligned sequences',
+        'inputExample': 'DNA_MATRIX\n-2\nCAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTAT\nCGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGAC',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'scored_pairwise_overlap_alignment_affine_gap_penalty',
+        'imagePath': "/images/Sequence Alignment Icon.png",
+        'toolTitle': 'Pairwise Global Alignment',
+        'textDescription': 'Align two nucleotide or protein sequences',
+        'dateAdded': "2025-07-16T07:52:00",
+        'category': "Sequence Alignment",
+        'longDescription': 'This tool performs pairwise alignment using a dynamic programming algorithm. It can be used for nucleotide or protein sequences, depending on the scoring matrix chosen.',
+        'inputFormat': 'scoring matrix: the scoring matrix used for the alignment. The options for matrices are BLOSUM62 and PAM250 for protein sequences, and DNA_MATRIX for dna sequences. DNA_MATRIX is a simple scoring matrix with +1 for matches and -1 for mismatches.\nindel score: the score for insertions or deletions. Usually a negative number.\nsequences: two sequences, each on their own line, to align.',
+        'outputFormat': 'score: the score of the alignment. A higher score means a better alignment.\nalignment: the aligned sequences',
+        'inputExample': 'DNA_MATRIX\n-2\nCAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTAT\nCGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGAC',
+        'listArgumentIndex': -1
+    },
+    {
+        'popularity': 0,
+        'URL': 'greedy_multiple_alignment',
+        'imagePath': "/images/Sequence Alignment Icon.png",
+        'toolTitle': 'Pairwise Global Alignment',
+        'textDescription': 'Align two nucleotide or protein sequences',
+        'dateAdded': "2025-07-16T07:52:00",
+        'category': "Sequence Alignment",
+        'longDescription': 'This tool performs pairwise alignment using a dynamic programming algorithm. It can be used for nucleotide or protein sequences, depending on the scoring matrix chosen.',
+        'inputFormat': 'scoring matrix: the scoring matrix used for the alignment. The options for matrices are BLOSUM62 and PAM250 for protein sequences, and DNA_MATRIX for dna sequences. DNA_MATRIX is a simple scoring matrix with +1 for matches and -1 for mismatches.\nindel score: the score for insertions or deletions. Usually a negative number.\nsequences: two sequences, each on their own line, to align.',
+        'outputFormat': 'score: the score of the alignment. A higher score means a better alignment.\nalignment: the aligned sequences',
+        'inputExample': 'DNA_MATRIX\n-2\nCAAGGAACTCAATCGTCGAGTCCACGGGGGGCAGAACACGCTAT\nCGCCCTACCTTTCGTGCCTATCAAAGATCTAGCTAGCTAGCGAC',
+        'listArgumentIndex': -1
+    },
 ]

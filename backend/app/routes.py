@@ -40,6 +40,16 @@ from .algorithms.cyclopeptide_sequencer import leaderboard_cyclopeptide_sequence
 from .algorithms.cyclopeptide_sequencer import convolution_cyclopeptide_sequencing
 from .algorithms.cyclopeptide_sequencer import amino_acid_masses_to_letters
 
+from .algorithms.sequence_alignment import scored_pairwise_global_alignment
+from .algorithms.sequence_alignment import scored_pairwise_local_alignment
+from .algorithms.sequence_alignment import scored_pairwise_fitting_alignment
+from .algorithms.sequence_alignment import scored_pairwise_overlap_alignment
+from .algorithms.sequence_alignment import scored_pairwise_global_alignment_affine_gap_penalty
+from .algorithms.sequence_alignment import scored_pairwise_local_alignment_affine_gap_penalty
+from .algorithms.sequence_alignment import scored_pairwise_fitting_alignment_affine_gap_penalty
+from .algorithms.sequence_alignment import scored_pairwise_overlap_alignment_affine_gap_penalty
+from .algorithms.sequence_alignment import greedy_multiple_alignment
+
 api = Blueprint('api', __name__)
 
 
